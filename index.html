@@ -187,8 +187,14 @@
             const header = document.getElementById('main-header');
             const nav = document.getElementById('main-nav');
             const workoutDetailPage = document.getElementById('workout-detail-page');
+            const nameInput = document.getElementById('name-input');
+            const avatarGrid = document.getElementById('avatar-grid');
+            const continueBtn = document.getElementById('continue-btn');
+            const greeting = document.getElementById('greeting');
+            const userAvatar = document.getElementById('user-avatar');
 
             let currentLevel = 'beginner'; // Nivel por defecto
+            let selectedAvatar = 'https://placehold.co/48x48/FBCFE8/4A2E0A?text=LM';
 
             const workouts = {
                 'day-1': { title: 'Día 1: Pecho y Tríceps', exercises: [
@@ -218,7 +224,7 @@
             };
 
             function showPage(pageId) {
-                if (pageId === 'level-selection-page') {
+                if (pageId === 'level-selection-page' || pageId === 'welcome-page') {
                     header.classList.add('hidden');
                     nav.classList.add('hidden');
                 } else {
@@ -333,6 +339,57 @@
                         }
                     }
                 });
+            }
+
+            // Lógica de Bienvenida y Perfil
+            const avatars = [
+                'https://placehold.co/64x64/FBCFE8/4A2E0A?text=👩',
+                'https://placehold.co/64x64/BFDBFE/1E3A8A?text=👨',
+                'https://placehold.co/64x64/A7F3D0/065F46?text=🧑',
+                'https://placehold.co/64x64/FDE68A/92400E?text=💪',
+                'https://placehold.co/64x64/C7D2FE/3730A3?text=🧘',
+                'https://placehold.co/64x64/FECACA/991B1B?text=🏃',
+                'https://placehold.co/64x64/D1FAE5/047857?text=🤸',
+                'https://placehold.co/64x64/E9D5FF/5B21B6?text=🏋️',
+            ];
+
+            avatars.forEach(avatarUrl => {
+                const img = document.createElement('img');
+                img.src = avatarUrl;
+                img.className = 'w-16 h-16 rounded-full cursor-pointer hover:opacity-75 transition';
+                avatarGrid.appendChild(img);
+                img.addEventListener('click', () => {
+                    document.querySelectorAll('#avatar-grid img').forEach(i => i.classList.remove('avatar-selected'));
+                    img.classList.add('avatar-selected');
+                    selectedAvatar = avatarUrl;
+                });
+            });
+
+            continueBtn.addEventListener('click', () => {
+                const name = nameInput.value.trim();
+                if (name === '') {
+                    alert('Por favor, escribe tu nombre.');
+                    return;
+                }
+                localStorage.setItem('userName', name);
+                localStorage.setItem('userAvatar', selectedAvatar);
+                updateProfile(name, selectedAvatar);
+                showPage('level-selection-page');
+            });
+
+            function updateProfile(name, avatarUrl) {
+                greeting.textContent = `¡Hola, ${name}!`;
+                userAvatar.src = avatarUrl;
+            }
+
+            // Cargar perfil si existe
+            const savedName = localStorage.getItem('userName');
+            const savedAvatar = localStorage.getItem('userAvatar');
+            if (savedName && savedAvatar) {
+                updateProfile(savedName, savedAvatar);
+                showPage('program-overview-page');
+            } else {
+                showPage('welcome-page');
             }
         });
     </script>
