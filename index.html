@@ -103,7 +103,12 @@
             <!-- Página Principal del Programa -->
             <div id="program-overview-page" class="page">
                 <div class="p-6 pb-20">
-                    <h3 class="text-xl font-bold text-slate-700 dark:text-slate-200 mb-4">Tu Programa Semanal</h3>
+                    <header class="flex items-center gap-4 mb-8">
+                        <button id="change-level-btn" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-stone-800">
+                            <svg class="w-6 h-6 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Tu Programa Semanal</h2>
+                    </header>
                     <div class="space-y-4">
                         <div id="day-1-card" class="bg-sky-50 dark:bg-sky-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-sky-100 dark:border-sky-900 cursor-pointer hover:bg-sky-100 dark:hover:bg-sky-900 transition">
                             <div class="bg-sky-100 dark:bg-sky-800 p-3 rounded-xl"><svg class="w-10 h-10 text-sky-600 dark:text-sky-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="12" r="4" fill="currentColor"/><path d="M16 28L24 20L40 20L48 28" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 20V36L20 48" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 20V36L44 48" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -156,6 +161,17 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Página de Perfil -->
+            <div id="profile-page" class="page">
+                <div class="p-6 pb-20">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-8">Tu Perfil</h2>
+                    <div class="space-y-6">
+                        <button id="edit-profile-btn" class="w-full bg-sky-600 text-white p-3 rounded-lg font-bold hover:bg-sky-700 transition">Editar Perfil</button>
+                        <button id="delete-profile-btn" class="w-full bg-red-600 text-white p-3 rounded-lg font-bold hover:bg-red-700 transition">Borrar Perfil</button>
+                    </div>
+                </div>
+            </div>
         </main>
         
     </div>
@@ -168,7 +184,7 @@
         <button class="nav-btn p-2 text-slate-400 dark:text-slate-500" data-page="progress-page">
             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L12 11.586l3.293-3.293a1 1 0 011.414 0l-3 3a1 1 0 01-1.414-1.414z" clip-rule="evenodd" /></svg>
         </button>
-        <button class="nav-btn p-2 text-slate-400 dark:text-slate-500">
+        <button class="nav-btn p-2 text-slate-400 dark:text-slate-500" data-page="profile-page">
             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
         </button>
     </nav>
@@ -177,10 +193,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             const pages = document.querySelectorAll('.page');
             const dayCards = {
-                'day-1-card': 'day-1-page',
-                'day-2-card': 'day-2-page',
-                'day-3-card': 'day-3-page',
-                'day-4-card': 'day-4-page',
+                'day-1-card': 'day-1',
+                'day-2-card': 'day-2',
+                'day-3-card': 'day-3',
+                'day-4-card': 'day-4',
             };
             const navButtons = document.querySelectorAll('.nav-btn');
             const levelButtons = document.querySelectorAll('.level-btn');
@@ -192,34 +208,37 @@
             const continueBtn = document.getElementById('continue-btn');
             const greeting = document.getElementById('greeting');
             const userAvatar = document.getElementById('user-avatar');
+            const editProfileBtn = document.getElementById('edit-profile-btn');
+            const deleteProfileBtn = document.getElementById('delete-profile-btn');
+            const changeLevelBtn = document.getElementById('change-level-btn');
 
             let currentLevel = 'beginner'; // Nivel por defecto
             let selectedAvatar = 'https://placehold.co/48x48/FBCFE8/4A2E0A?text=LM';
 
             const workouts = {
                 'day-1': { title: 'Día 1: Pecho y Tríceps', exercises: [
-                    { name: 'Flexiones', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Flexiones', levels: { beginner: '3 series de 10', intermediate: '3 series de 15', advanced: '4 series al fallo' } },
-                    { name: 'Press de Banca', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Press+Banca', levels: { beginner: '3 series de 8', intermediate: '4 series de 10', advanced: '4 series de 12' } },
-                    { name: 'Fondos de Tríceps', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Fondos', levels: { beginner: '3 series de 10', intermediate: '3 series al fallo', advanced: '4 series al fallo' } },
-                    { name: 'Aperturas con Mancuerna', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Aperturas', levels: { beginner: '3 series de 12', intermediate: '4 series de 12', advanced: '4 series de 15' } },
+                    { name: 'Flexiones', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Flexiones', levels: { beginner: '3 series de 10', intermediate: '3 series de 15', advanced: '4 series al fallo' }, description: 'Túmbate boca abajo, coloca las manos a la altura de los hombros y empuja el suelo para levantar el cuerpo, manteniendo la espalda recta.' },
+                    { name: 'Press de Banca', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Press+Banca', levels: { beginner: '3 series de 8', intermediate: '4 series de 10', advanced: '4 series de 12' }, description: 'Acuéstate en un banco plano. Baja la barra hasta el pecho y luego empújala hacia arriba hasta que los brazos estén completamente extendidos.' },
+                    { name: 'Fondos de Tríceps', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Fondos', levels: { beginner: '3 series de 10', intermediate: '3 series al fallo', advanced: '4 series al fallo' }, description: 'Usa dos bancos paralelos o una silla. Baja el cuerpo flexionando los codos hasta que formen un ángulo de 90 grados y luego vuelve a subir.' },
+                    { name: 'Aperturas con Mancuerna', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Aperturas', levels: { beginner: '3 series de 12', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'Acuéstate en un banco plano con una mancuerna en cada mano. Baja los brazos hacia los lados con una ligera flexión en los codos.' },
                 ]},
                 'day-2': { title: 'Día 2: Espalda y Bíceps', exercises: [
-                    { name: 'Remo con Mancuerna', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Remo', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 15' } },
-                    { name: 'Pull-aparts con Banda', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Pull-aparts', levels: { beginner: '3 series de 15', intermediate: '4 series de 15', advanced: '4 series de 20' } },
-                    { name: 'Curl de Bíceps', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Curl+Biceps', levels: { beginner: '3 series de 12', intermediate: '4 series de 12', advanced: '4 series de 15' } },
-                    { name: 'Jalón al Pecho', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Jalon+Pecho', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 12' } },
+                    { name: 'Remo con Mancuerna', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Remo', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'Apoya una rodilla y una mano en un banco. Con la otra mano, levanta una mancuerna hacia tu cadera, manteniendo la espalda recta.' },
+                    { name: 'Pull-aparts con Banda', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Pull-aparts', levels: { beginner: '3 series de 15', intermediate: '4 series de 15', advanced: '4 series de 20' }, description: 'Sostén una banda de resistencia con ambas manos, brazos extendidos al frente. Separa las manos, estirando la banda y juntando los omóplatos.' },
+                    { name: 'Curl de Bíceps', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Curl+Biceps', levels: { beginner: '3 series de 12', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'De pie, sostén una mancuerna en cada mano. Flexiona los codos para levantar las pesas hacia los hombros, manteniendo los codos pegados al cuerpo.' },
+                    { name: 'Jalón al Pecho', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Jalon+Pecho', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 12' }, description: 'Sentado en una máquina de jalón, agarra la barra con las manos más anchas que los hombros. Tira de la barra hacia la parte superior del pecho.' },
                 ]},
                 'day-3': { title: 'Día 3: Piernas y Glúteos', exercises: [
-                    { name: 'Sentadillas', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Sentadillas', levels: { beginner: '3 series de 12', intermediate: '4 series de 15', advanced: '4 series de 20' } },
-                    { name: 'Zancadas', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Zancadas', levels: { beginner: '3 series de 10 (cada pierna)', intermediate: '4 series de 12 (cada pierna)', advanced: '4 series de 15 (cada pierna)' } },
-                    { name: 'Puente de Glúteos', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Puente+Gluteos', levels: { beginner: '3 series de 15', intermediate: '4 series de 20', advanced: '4 series de 25' } },
-                    { name: 'Step-ups', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Step-ups', levels: { beginner: '3 series de 10 (cada pierna)', intermediate: '4 series de 12 (cada pierna)', advanced: '4 series de 15 (cada pierna)' } },
+                    { name: 'Sentadillas', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Sentadillas', levels: { beginner: '3 series de 12', intermediate: '4 series de 15', advanced: '4 series de 20' }, description: 'De pie, con los pies a la anchura de los hombros, baja las caderas como si te fueras a sentar en una silla. Mantén la espalda recta.' },
+                    { name: 'Zancadas', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Zancadas', levels: { beginner: '3 series de 10 (cada pierna)', intermediate: '4 series de 12 (cada pierna)', advanced: '4 series de 15 (cada pierna)' }, description: 'Da un paso hacia adelante con una pierna y baja las caderas hasta que ambas rodillas estén dobladas en un ángulo de 90 grados.' },
+                    { name: 'Puente de Glúteos', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Puente+Gluteos', levels: { beginner: '3 series de 15', intermediate: '4 series de 20', advanced: '4 series de 25' }, description: 'Acuéstate boca arriba con las rodillas dobladas. Levanta las caderas del suelo hasta que tu cuerpo forme una línea recta desde los hombros hasta las rodillas.' },
+                    { name: 'Step-ups', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Step-ups', levels: { beginner: '3 series de 10 (cada pierna)', intermediate: '4 series de 12 (cada pierna)', advanced: '4 series de 15 (cada pierna)' }, description: 'Sube a un banco o escalón con un pie, y luego baja. Alterna las piernas en cada repetición.' },
                 ]},
                 'day-4': { title: 'Día 4: Hombros y Core', exercises: [
-                    { name: 'Press de Hombros', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Press+Hombros', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 15' } },
-                    { name: 'Elevaciones Laterales', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Elev.+Laterales', levels: { beginner: '3 series de 15', intermediate: '4 series de 15', advanced: '4 series de 20' } },
-                    { name: 'Plancha', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Plancha', levels: { beginner: '3 series de 30s', intermediate: '4 series de 45s', advanced: '4 series de 60s' } },
-                    { name: 'Giros Rusos', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Giros+Rusos', levels: { beginner: '3 series de 15', intermediate: '4 series de 20', advanced: '4 series de 25' } },
+                    { name: 'Press de Hombros', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Press+Hombros', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'Sentado o de pie, sostén una mancuerna en cada mano a la altura de los hombros. Empuja las pesas hacia arriba hasta que los brazos estén completamente extendidos.' },
+                    { name: 'Elevaciones Laterales', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Elev.+Laterales', levels: { beginner: '3 series de 15', intermediate: '4 series de 15', advanced: '4 series de 20' }, description: 'De pie, sostén una mancuerna en cada mano a los lados. Levanta los brazos hacia los lados hasta que estén a la altura de los hombros.' },
+                    { name: 'Plancha', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Plancha', levels: { beginner: '3 series de 30s', intermediate: '4 series de 45s', advanced: '4 series de 60s' }, description: 'Mantén el cuerpo en línea recta, apoyado sobre los antebrazos y los dedos de los pies. Aprieta el abdomen y los glúteos.' },
+                    { name: 'Giros Rusos', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Giros+Rusos', levels: { beginner: '3 series de 15', intermediate: '4 series de 20', advanced: '4 series de 25' }, description: 'Siéntate en el suelo con las rodillas dobladas. Inclina el torso hacia atrás y gira el tronco de lado a lado.' },
                 ]}
             };
 
@@ -241,7 +260,7 @@
                 const workout = workouts[dayId];
                 if (!workout) return;
 
-                let exercisesHTML = workout.exercises.map(ex => `
+                let exercisesHTML = workout.exercises.map((ex, index) => `
                     <div class="bg-slate-50 dark:bg-stone-800/50 p-4 rounded-2xl shadow-sm">
                         <img src="${ex.image}" alt="Ilustración de ${ex.name}" class="w-full h-40 object-cover rounded-lg mb-4">
                         <div class="flex items-center justify-between">
@@ -249,10 +268,11 @@
                                 <h4 class="font-bold text-slate-800 dark:text-slate-100">${ex.name}</h4>
                                 <p class="text-sm text-slate-500 dark:text-slate-400">${ex.levels[level]}</p>
                             </div>
-                            <button class="p-2 rounded-full bg-slate-200 dark:bg-stone-700 text-slate-700 dark:text-slate-200">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>
+                            <button class="info-btn p-2 rounded-full hover:bg-slate-200 dark:hover:bg-stone-700" data-target="desc-${dayId}-${index}">
+                                <svg class="w-6 h-6 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </button>
                         </div>
+                        <p id="desc-${dayId}-${index}" class="text-sm text-slate-600 dark:text-slate-400 mt-2 hidden">${ex.description}</p>
                     </div>
                 `).join('');
 
@@ -268,6 +288,18 @@
                     </div>
                 `;
                 workoutDetailPage.querySelector('.back-btn').addEventListener('click', () => showPage('program-overview-page'));
+                
+                // Add event listeners for the new info buttons
+                workoutDetailPage.querySelectorAll('.info-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetId = button.dataset.target;
+                        const descriptionEl = document.getElementById(targetId);
+                        if (descriptionEl) {
+                            descriptionEl.classList.toggle('hidden');
+                        }
+                    });
+                });
+
                 showPage('workout-detail-page');
             }
 
@@ -391,6 +423,24 @@
             } else {
                 showPage('welcome-page');
             }
+
+            editProfileBtn.addEventListener('click', () => {
+                nameInput.value = localStorage.getItem('userName');
+                showPage('welcome-page');
+            });
+
+            deleteProfileBtn.addEventListener('click', () => {
+                if(confirm('¿Estás seguro de que quieres borrar tu perfil? Esta acción no se puede deshacer.')) {
+                    localStorage.removeItem('userName');
+                    localStorage.removeItem('userAvatar');
+                    window.location.reload();
+                }
+            });
+
+            if(changeLevelBtn) {
+                changeLevelBtn.addEventListener('click', () => showPage('level-selection-page'));
+            }
+
         });
     </script>
 
