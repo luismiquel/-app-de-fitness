@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html lang="es" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App de Fitness</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial‑scale=1.0" />
+  <title>App Fitness Progresiva</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+<body class="bg-white dark:bg-gray‑900 text-gray‑900 dark:text-gray‑100 transition-colors duration-300">
   <div class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <h1 class="text-3xl font-bold mb-6">Ejercicios por Día</h1>
+    <h1 class="text-3xl font-bold mb-6">Rutina Semanal Progresiva</h1>
 
-    <!-- Toggle de modo oscuro -->
-    <button id="theme-toggle" class="mb-4 px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded">
-      Cambiar Modo Claro/Oscuro
+    <!-- Toggle modo oscuro -->
+    <button id="theme-toggle" class="mb-4 px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-lg">
+      Cambiar modo claro/oscuro
     </button>
 
-    <!-- Botones de pestañas -->
+    <!-- Pestañas -->
     <div class="flex flex-wrap justify-center gap-2 mb-4">
-      <button class="tab-btn px-4 py-2 rounded bg-amber-500 text-white" data-day="1">Día 1</button>
-      <button class="tab-btn px-4 py-2 rounded bg-gray-300 dark:bg-gray-700" data-day="2">Día 2</button>
-      <button class="tab-btn px-4 py-2 rounded bg-gray-300 dark:bg-gray-700" data-day="3">Día 3</button>
-      <button class="tab-btn px-4 py-2 rounded bg-gray-300 dark:bg-gray-700" data-day="4">Día 4</button>
+      <button class="tab-btn px-4 py-2 rounded-lg bg-amber-500 text-white" data-day="1">Día 1</button>
+      <button class="tab-btn px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-700" data-day="2">Día 2</button>
+      <button class="tab-btn px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-700" data-day="3">Día 3</button>
+      <button class="tab-btn px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-700" data-day="4">Día 4</button>
     </div>
 
-    <!-- Contenido de ejercicios -->
-    <div class="w-full max-w-md">
-      <div class="tab-content space-y-2" data-day="1">
-        <h2 class="text-xl font-semibold">Día 1: Pecho y Tríceps</h2>
+    <!-- Contenidos Día 1–4 -->
+    <div class="w-full max-w-lg">
+      <!-- Día 1 -->
+      <div class="tab-content" data-day="1">
+        <h2 class="text-xl font-semibold mb-2">Día 1: Pecho y Tríceps — 3×15</h2>
         <ul class="list-disc list-inside">
           <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
           <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
@@ -37,50 +38,85 @@
           <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
         </ul>
       </div>
-      <!-- Puedes agregar más div.tab-content para otros días -->
+      <!-- Día 2 -->
+      <div class="tab-content hidden" data-day="2">
+        <h2 class="text-xl font-semibold mb-2">Día 2: Pecho y Tríceps — 4×20</h2>
+        <ul class="list-disc list-inside">
+          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
+        </ul>
+      </div>
+      <!-- Día 3 -->
+      <div class="tab-content hidden" data-day="3">
+        <h2 class="text-xl font-semibold mb-2">Día 3: Pecho y Tríceps — 4×25</h2>
+        <ul class="list-disc list-inside">
+          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
+        </ul>
+      </div>
+      <!-- Día 4 -->
+      <div class="tab-content hidden" data-day="4">
+        <h2 class="text-xl font-semibold mb-2">Día 4: Pecho y Tríceps — 5×30</h2>
+        <ul class="list-disc list-inside">
+          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
+        </ul>
+      </div>
     </div>
 
   </div>
 
   <script>
-    // Cambiar pestañas
-    document.querySelectorAll('.tab-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const day = button.dataset.day;
-
-        // Estilos
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-          btn.classList.remove('bg-amber-500', 'text-white');
-          btn.classList.add('bg-gray-300', 'dark:bg-gray-700');
+    // Pestañas
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const day = btn.dataset.day;
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.toggle('bg-amber-500', b === btn);
+          b.classList.toggle('text-white', b === btn);
+          b.classList.toggle('bg-gray-300', b !== btn);
+          b.classList.toggle('dark:bg-gray-700', b !== btn);
         });
-        button.classList.add('bg-amber-500', 'text-white');
-
-        // Mostrar contenido
-        document.querySelectorAll('.tab-content').forEach(tab => {
-          tab.style.display = tab.dataset.day === day ? 'block' : 'none';
+        document.querySelectorAll('.tab-content').forEach(c => {
+          c.classList.toggle('hidden', c.dataset.day !== day);
         });
       });
     });
 
-    // Voz
+    // Voz explicativa
+    const explicaciones = {
+      'Flexiones': 'Colócate boca abajo con las manos a la altura de los hombros. Baja hasta casi tocar el suelo y sube manteniendo el cuerpo recto.',
+      'Press de Banca': 'Acuéstate en banco, baja la barra hasta el pecho y empuja hacia arriba con control.',
+      'Fondos': 'Usa dos bancos o barras paralelas. Baja el cuerpo flexionando los codos y sube hasta extienderlos completamente.',
+      'Aperturas con mancuerna': 'Con mancuernas y banco plano, abre los brazos hacia los lados y vuelve a juntar.',
+      'Press inclinado': 'Banco inclinado a 30º, realiza press para trabajar la parte superior del pecho.',
+      'Extensión de tríceps': 'Con mancuerna detrás de la cabeza, extiende el brazo hacia arriba manteniendo el codo fijo.'
+    };
     document.querySelectorAll('.voz-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const ejercicio = btn.parentElement.textContent.trim().replace('🔊', '');
-        const texto = `${ejercicio}. Aquí va la explicación del ejercicio.`;
-        const speech = new SpeechSynthesisUtterance(texto);
-        speech.lang = 'es-ES';
-        speechSynthesis.speak(speech);
+        const ejercicio = btn.parentNode.textContent.replace('🔊', '').trim();
+        const msg = explicaciones[ejercicio] || 'No hay descripción disponible.';
+        const utterance = new SpeechSynthesisUtterance(msg);
+        utterance.lang = 'es-ES';
+        speechSynthesis.speak(utterance);
       });
     });
 
-    // Modo oscuro
+    // Modo oscuro toggle
     document.getElementById('theme-toggle').addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
-    });
-
-    // Mostrar solo Día 1 al inicio
-    document.querySelectorAll('.tab-content').forEach(tab => {
-      tab.style.display = tab.dataset.day === "1" ? 'block' : 'none';
     });
   </script>
 </body>
