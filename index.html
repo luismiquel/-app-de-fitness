@@ -1,448 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness App - Home</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:wght@500;700&display=swap" rel="stylesheet">
-
-    <!-- Estilos personalizados -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        h1, h2, h3 {
-            font-family: 'Lora', serif;
-        }
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
-        }
-        .avatar-selected {
-            outline: 4px solid #f59e0b; /* amber-500 */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness App - Extendida</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3 {
+      font-family: 'Lora', serif;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+  </style>
 </head>
-<body class="bg-slate-50 dark:bg-stone-900">
-
-    <!-- Contenedor principal que simula la pantalla de un móvil -->
-    <div class="max-w-sm mx-auto bg-white dark:bg-stone-950 min-h-screen shadow-2xl flex flex-col">
-        
-        <header id="main-header" class="p-6 flex justify-between items-center hidden">
-            <div>
-                <h2 id="greeting" class="text-2xl font-bold text-slate-800 dark:text-slate-100">Hola, Atleta!</h2>
-                <p class="text-slate-500 dark:text-slate-400">Listo para tu próximo reto?</p>
-            </div>
-             <div class="flex items-center gap-4">
-                <button id="theme-toggle" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-stone-800 focus:outline-none">
-                    <svg id="theme-toggle-dark-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                    <svg id="theme-toggle-light-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 101.414-1.414l-.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM6.464 16.364l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 00-1.414-1.414zM13.536 16.364a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414l.707.707z"></path></svg>
-                </button>
-                <img id="user-avatar" src="https://placehold.co/48x48/FBCFE8/4A2E0A?text=LM" alt="Avatar de usuario" class="w-12 h-12 rounded-full">
-            </div>
-        </header>
-
-        <main class="flex-grow">
-            <!-- Página de Bienvenida -->
-            <div id="welcome-page" class="page active">
-                <div class="p-6 flex flex-col justify-center items-center h-full">
-                    <h2 class="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">¡Bienvenido!</h2>
-                    <p class="text-slate-500 dark:text-slate-400 mb-8 text-center">Empecemos por crear tu perfil.</p>
-                    <div class="w-full space-y-8">
-                        <div>
-                            <label for="name-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tu Nombre</label>
-                            <input type="text" id="name-input" class="w-full p-3 border border-slate-300 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-800" placeholder="Escribe tu nombre">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Elige tu Avatar</label>
-                            <div id="avatar-grid" class="grid grid-cols-4 gap-4">
-                                <!-- Avatares se generan aquí -->
-                            </div>
-                        </div>
-                        <button id="continue-btn" class="w-full bg-amber-600 text-white p-3 rounded-lg font-bold hover:bg-amber-700 transition">Continuar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Página de Selección de Nivel -->
-            <div id="level-selection-page" class="page">
-                <div class="p-6 flex flex-col justify-center items-center h-full">
-                    <h2 class="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">Elige tu Nivel</h2>
-                    <p class="text-slate-500 dark:text-slate-400 mb-12 text-center">Personaliza tu experiencia de entrenamiento.</p>
-                    <div class="space-y-6 w-full">
-                        <button data-level="beginner" class="level-btn w-full bg-emerald-100 dark:bg-emerald-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-200 dark:hover:bg-emerald-800 transition">
-                            <div class="bg-emerald-200 dark:bg-emerald-700 p-3 rounded-xl"><svg class="w-10 h-10 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 00-9.95 9.5h0a10 10 0 0019.9 0h0A10 10 0 0012 2zM12 18a6 6 0 100-12 6 6 0 000 12z"></path></svg></div>
-                            <div><h4 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 text-left">Principiante</h4></div>
-                        </button>
-                        <button data-level="intermediate" class="level-btn w-full bg-sky-100 dark:bg-sky-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-sky-200 dark:border-sky-800 hover:bg-sky-200 dark:hover:bg-sky-800 transition">
-                            <div class="bg-sky-200 dark:bg-sky-700 p-3 rounded-xl"><svg class="w-10 h-10 text-sky-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
-                            <div><h4 class="text-lg font-bold text-sky-900 dark:text-sky-100 text-left">Intermedio</h4></div>
-                        </button>
-                        <button data-level="advanced" class="level-btn w-full bg-rose-100 dark:bg-rose-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-rose-200 dark:border-rose-800 hover:bg-rose-200 dark:hover:bg-rose-800 transition">
-                            <div class="bg-rose-200 dark:bg-rose-700 p-3 rounded-xl"><svg class="w-10 h-10 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343m11.314 11.314a8 8 0 00-11.314-11.314m11.314 11.314L6.343 7.343"></path></svg></div>
-                            <div><h4 class="text-lg font-bold text-rose-900 dark:text-rose-100 text-left">Avanzado</h4></div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Página Principal del Programa -->
-            <div id="program-overview-page" class="page">
-                <div class="p-6 pb-20">
-                    <header class="flex items-center gap-4 mb-8">
-                        <button id="change-level-btn" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-stone-800">
-                            <svg class="w-6 h-6 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                        </button>
-                        <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Tu Programa Semanal</h2>
-                    </header>
-                    <div class="space-y-4">
-                        <div id="day-1-card" class="bg-sky-50 dark:bg-sky-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-sky-100 dark:border-sky-900 cursor-pointer hover:bg-sky-100 dark:hover:bg-sky-900 transition">
-                            <div class="bg-sky-100 dark:bg-sky-800 p-3 rounded-xl"><svg class="w-10 h-10 text-sky-600 dark:text-sky-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="12" r="4" fill="currentColor"/><path d="M16 28L24 20L40 20L48 28" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 20V36L20 48" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 20V36L44 48" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                            <div><p class="text-sm text-sky-700 dark:text-sky-300 font-semibold">Día 1</p><h4 class="text-lg font-bold text-sky-900 dark:text-sky-100">Pecho y Tríceps</h4></div>
-                        </div>
-                        <div id="day-2-card" class="bg-emerald-50 dark:bg-emerald-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-emerald-100 dark:border-emerald-900 cursor-pointer hover:bg-emerald-100 dark:hover:bg-emerald-900 transition">
-                            <div class="bg-emerald-100 dark:bg-emerald-800 p-3 rounded-xl"><svg class="w-10 h-10 text-emerald-600 dark:text-emerald-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 16H56" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="28" r="4" fill="currentColor"/><path d="M32 32V44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M32 44L26 56" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M32 44L38 56" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M24 16C24 20 28 24 32 24" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M40 16C40 20 36 24 32 24" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></div>
-                            <div><p class="text-sm text-emerald-700 dark:text-emerald-300 font-semibold">Día 2</p><h4 class="text-lg font-bold text-emerald-900 dark:text-emerald-100">Espalda y Bíceps</h4></div>
-                        </div>
-                        <div id="day-3-card" class="bg-rose-50 dark:bg-rose-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-rose-100 dark:border-rose-900 cursor-pointer hover:bg-rose-100 dark:hover:bg-rose-900 transition">
-                            <div class="bg-rose-100 dark:bg-rose-800 p-3 rounded-xl"><svg class="w-10 h-10 text-rose-600 dark:text-rose-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="12" r="4" fill="currentColor"/><path d="M32 16V36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M24 48L32 36L40 48" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M24 48H16" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M40 48H48" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M20 28H44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></div>
-                            <div><p class="text-sm text-rose-700 dark:text-rose-300 font-semibold">Día 3</p><h4 class="text-lg font-bold text-rose-900 dark:text-rose-100">Piernas y Glúteos</h4></div>
-                        </div>
-                        <div id="day-4-card" class="bg-amber-50 dark:bg-amber-900/50 p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-amber-100 dark:border-amber-900 cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-900 transition">
-                            <div class="bg-amber-100 dark:bg-amber-800 p-3 rounded-xl"><svg class="w-10 h-10 text-amber-600 dark:text-amber-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="48" cy="24" r="4" fill="currentColor"/><path d="M16 48L28 40L52 40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M16 48L12 56" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M52 40L56 48" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></div>
-                            <div><p class="text-sm text-amber-700 dark:text-amber-300 font-semibold">Día 4</p><h4 class="text-lg font-bold text-amber-900 dark:text-amber-100">Hombros y Core</h4></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Página de Detalle de Entrenamiento -->
-            <div id="workout-detail-page" class="page">
-                <!-- El contenido se genera dinámicamente -->
-            </div>
-            
-            <!-- Página de Progreso -->
-            <div id="progress-page" class="page">
-                <div class="p-6 pb-20">
-                    <div class="bg-gradient-to-br from-amber-100 to-rose-100 dark:from-amber-900/50 dark:to-rose-900/50 p-6 rounded-2xl mb-8 text-center">
-                        <h3 class="text-lg font-semibold text-amber-800 dark:text-amber-200">¡Sigue así!</h3>
-                        <p class="text-4xl font-bold text-amber-900 dark:text-amber-100 my-2">75%</p>
-                        <p class="text-sm text-amber-700 dark:text-amber-300">Completado esta semana</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 text-center mb-8">
-                        <div class="bg-slate-100 dark:bg-stone-800 p-4 rounded-xl"><p class="text-2xl font-bold text-slate-800 dark:text-slate-100">3</p><p class="text-sm text-slate-500 dark:text-slate-400">Entrenos</p></div>
-                        <div class="bg-slate-100 dark:bg-stone-800 p-4 rounded-xl"><p class="text-2xl font-bold text-slate-800 dark:text-slate-100">1,250</p><p class="text-sm text-slate-500 dark:text-slate-400">Calorías</p></div>
-                    </div>
-                    <div>
-                         <h4 class="text-lg font-bold text-slate-700 dark:text-slate-200 mb-2">Actividad Semanal</h4>
-                         <div class="flex justify-around bg-slate-100 dark:bg-stone-800 p-4 rounded-xl">
-                            <div class="text-center"><p class="text-xs text-slate-500 dark:text-slate-400">L</p><div class="w-4 h-4 mt-2 bg-sky-500 rounded-full"></div></div>
-                            <div class="text-center"><p class="text-xs text-slate-500 dark:text-slate-400">M</p><div class="w-4 h-4 mt-2 bg-emerald-500 rounded-full"></div></div>
-                            <div class="text-center"><p class="text-xs text-slate-500 dark:text-slate-400">X</p><div class="w-4 h-4 mt-2 bg-rose-500 rounded-full"></div></div>
-                            <div class="text-center"><p class="text-xs text-slate-500 dark:text-slate-400">J</p><div class="w-4 h-4 mt-2 bg-slate-200 dark:bg-stone-700 rounded-full"></div></div>
-                            <div class="text-center"><p class="text-xs text-slate-500 dark:text-slate-400">V</p><div class="w-4 h-4 mt-2 bg-amber-500 rounded-full"></div></div>
-                            <div class="text-center"><p class="text-xs text-slate-500 dark:text-slate-400">S</p><div class="w-4 h-4 mt-2 bg-slate-200 dark:bg-stone-700 rounded-full"></div></div>
-                            <div class="text-center"><p class="text-xs text-slate-500 dark:text-slate-400">D</p><div class="w-4 h-4 mt-2 bg-slate-200 dark:bg-stone-700 rounded-full"></div></div>
-                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Página de Perfil -->
-            <div id="profile-page" class="page">
-                <div class="p-6 pb-20">
-                    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-8">Tu Perfil</h2>
-                    <div class="space-y-6">
-                        <button id="edit-profile-btn" class="w-full bg-sky-600 text-white p-3 rounded-lg font-bold hover:bg-sky-700 transition">Editar Perfil</button>
-                        <button id="delete-profile-btn" class="w-full bg-red-600 text-white p-3 rounded-lg font-bold hover:bg-red-700 transition">Borrar Perfil</button>
-                    </div>
-                </div>
-            </div>
-        </main>
-        
+<body class="bg-gray-100">
+  <div id="app" class="max-w-md mx-auto bg-white p-4 rounded shadow">
+    <h1 class="text-xl font-bold mb-4">Ejercicios por Día</h1>
+    <div id="program-overview-page">
+      <div class="space-y-4">
+        <button onclick="renderWorkoutPage('day-1', 'beginner')" class="block w-full p-2 bg-sky-200 rounded">Día 1</button>
+        <button onclick="renderWorkoutPage('day-2', 'beginner')" class="block w-full p-2 bg-green-200 rounded">Día 2</button>
+        <button onclick="renderWorkoutPage('day-3', 'beginner')" class="block w-full p-2 bg-rose-200 rounded">Día 3</button>
+        <button onclick="renderWorkoutPage('day-4', 'beginner')" class="block w-full p-2 bg-yellow-200 rounded">Día 4</button>
+      </div>
     </div>
-    
-    <!-- Navegación inferior -->
-    <nav id="main-nav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-white dark:bg-stone-900 border-t dark:border-stone-800 flex justify-around p-2 hidden">
-        <button class="nav-btn p-2 text-amber-600" data-page="program-overview-page">
-            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-        </button>
-        <button class="nav-btn p-2 text-slate-400 dark:text-slate-500" data-page="progress-page">
-            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L12 11.586l3.293-3.293a1 1 0 011.414 0l-3 3a1 1 0 01-1.414-1.414z" clip-rule="evenodd" /></svg>
-        </button>
-        <button class="nav-btn p-2 text-slate-400 dark:text-slate-500" data-page="profile-page">
-            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
-        </button>
-    </nav>
+    <div id="workout-detail-page" class="page mt-4"></div>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const pages = document.querySelectorAll('.page');
-            const dayCards = {
-                'day-1-card': 'day-1',
-                'day-2-card': 'day-2',
-                'day-3-card': 'day-3',
-                'day-4-card': 'day-4',
-            };
-            const navButtons = document.querySelectorAll('.nav-btn');
-            const levelButtons = document.querySelectorAll('.level-btn');
-            const header = document.getElementById('main-header');
-            const nav = document.getElementById('main-nav');
-            const workoutDetailPage = document.getElementById('workout-detail-page');
-            const nameInput = document.getElementById('name-input');
-            const avatarGrid = document.getElementById('avatar-grid');
-            const continueBtn = document.getElementById('continue-btn');
-            const greeting = document.getElementById('greeting');
-            const userAvatar = document.getElementById('user-avatar');
-            const editProfileBtn = document.getElementById('edit-profile-btn');
-            const deleteProfileBtn = document.getElementById('delete-profile-btn');
-            const changeLevelBtn = document.getElementById('change-level-btn');
+  <script>
+    const workouts = {
+      'day-1': {
+        title: 'Día 1: Pecho y Tríceps',
+        exercises: [
+          { name: 'Flexiones', description: 'Ejercicio básico para pecho.' },
+          { name: 'Press de Banca', description: 'Ejercicio de fuerza para pecho.' },
+          { name: 'Fondos', description: 'Activa tríceps y pecho.' },
+          { name: 'Aperturas con mancuerna', description: 'Estira fibras pectorales.' },
+          { name: 'Press inclinado', description: 'Enfocado en la parte superior del pecho.' },
+          { name: 'Extensión de tríceps', description: 'Aísla el tríceps con más precisión.' },
+        ]
+      },
+      'day-2': {
+        title: 'Día 2: Espalda y Bíceps',
+        exercises: [
+          { name: 'Remo con mancuerna', description: 'Desarrolla masa en la espalda.' },
+          { name: 'Pull-aparts con banda', description: 'Activa deltoides posteriores.' },
+          { name: 'Curl de bíceps', description: 'Ejercicio base para bíceps.' },
+          { name: 'Jalón al pecho', description: 'Desarrolla dorsales.' },
+          { name: 'Peso muerto', description: 'Trabaja toda la cadena posterior.' },
+          { name: 'Curl martillo', description: 'Foco en el braquiorradial.' },
+        ]
+      },
+      'day-3': {
+        title: 'Día 3: Piernas y Glúetos',
+        exercises: [
+          { name: 'Sentadillas', description: 'Básico para fuerza en piernas.' },
+          { name: 'Zancadas', description: 'Fuerza unilateral.' },
+          { name: 'Puente de glúteos', description: 'Enfocado en glúteos.' },
+          { name: 'Step-ups', description: 'Mejora estabilidad y fuerza.' },
+          { name: 'Peso muerto rumano', description: 'Foco en isquiotibiales y glúteos.' },
+          { name: 'Elevación de talones', description: 'Fortalece los gemelos.' },
+        ]
+      },
+      'day-4': {
+        title: 'Día 4: Hombros y Core',
+        exercises: [
+          { name: 'Press de hombros', description: 'Desarrolla los deltoides.' },
+          { name: 'Elevaciones laterales', description: 'Aísla el deltoide medio.' },
+          { name: 'Plancha', description: 'Fortalece el core.' },
+          { name: 'Giros rusos', description: 'Enfocados en oblicuos.' },
+          { name: 'Elevación frontal', description: 'Deltoide anterior.' },
+          { name: 'Ab wheel rollout', description: 'Core avanzado y desafiante.' },
+        ]
+      }
+    };
 
-            let currentLevel = 'beginner'; // Nivel por defecto
-            let selectedAvatar = 'https://placehold.co/48x48/FBCFE8/4A2E0A?text=LM';
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'es-ES';
+      speechSynthesis.speak(utterance);
+    }
 
-            const workouts = {
-                'day-1': { title: 'Día 1: Pecho y Tríceps', exercises: [
-                    { name: 'Flexiones', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Flexiones', levels: { beginner: '3 series de 10', intermediate: '3 series de 15', advanced: '4 series al fallo' }, description: 'Túmbate boca abajo, coloca las manos a la altura de los hombros y empuja el suelo para levantar el cuerpo, manteniendo la espalda recta.' },
-                    { name: 'Press de Banca', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Press+Banca', levels: { beginner: '3 series de 8', intermediate: '4 series de 10', advanced: '4 series de 12' }, description: 'Acuéstate en un banco plano. Baja la barra hasta el pecho y luego empújala hacia arriba hasta que los brazos estén completamente extendidos.' },
-                    { name: 'Fondos de Tríceps', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Fondos', levels: { beginner: '3 series de 10', intermediate: '3 series al fallo', advanced: '4 series al fallo' }, description: 'Usa dos bancos paralelos o una silla. Baja el cuerpo flexionando los codos hasta que formen un ángulo de 90 grados y luego vuelve a subir.' },
-                    { name: 'Aperturas con Mancuerna', image: 'https://placehold.co/600x400/E0F2FE/0891B2?text=Aperturas', levels: { beginner: '3 series de 12', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'Acuéstate en un banco plano con una mancuerna en cada mano. Baja los brazos hacia los lados con una ligera flexión en los codos.' },
-                ]},
-                'day-2': { title: 'Día 2: Espalda y Bíceps', exercises: [
-                    { name: 'Remo con Mancuerna', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Remo', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'Apoya una rodilla y una mano en un banco. Con la otra mano, levanta una mancuerna hacia tu cadera, manteniendo la espalda recta.' },
-                    { name: 'Pull-aparts con Banda', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Pull-aparts', levels: { beginner: '3 series de 15', intermediate: '4 series de 15', advanced: '4 series de 20' }, description: 'Sostén una banda de resistencia con ambas manos, brazos extendidos al frente. Separa las manos, estirando la banda y juntando los omóplatos.' },
-                    { name: 'Curl de Bíceps', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Curl+Biceps', levels: { beginner: '3 series de 12', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'De pie, sostén una mancuerna en cada mano. Flexiona los codos para levantar las pesas hacia los hombros, manteniendo los codos pegados al cuerpo.' },
-                    { name: 'Jalón al Pecho', image: 'https://placehold.co/600x400/D1FAE5/047857?text=Jalon+Pecho', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 12' }, description: 'Sentado en una máquina de jalón, agarra la barra con las manos más anchas que los hombros. Tira de la barra hacia la parte superior del pecho.' },
-                ]},
-                'day-3': { title: 'Día 3: Piernas y Glúteos', exercises: [
-                    { name: 'Sentadillas', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Sentadillas', levels: { beginner: '3 series de 12', intermediate: '4 series de 15', advanced: '4 series de 20' }, description: 'De pie, con los pies a la anchura de los hombros, baja las caderas como si te fueras a sentar en una silla. Mantén la espalda recta.' },
-                    { name: 'Zancadas', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Zancadas', levels: { beginner: '3 series de 10 (cada pierna)', intermediate: '4 series de 12 (cada pierna)', advanced: '4 series de 15 (cada pierna)' }, description: 'Da un paso hacia adelante con una pierna y baja las caderas hasta que ambas rodillas estén dobladas en un ángulo de 90 grados.' },
-                    { name: 'Puente de Glúteos', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Puente+Gluteos', levels: { beginner: '3 series de 15', intermediate: '4 series de 20', advanced: '4 series de 25' }, description: 'Acuéstate boca arriba con las rodillas dobladas. Levanta las caderas del suelo hasta que tu cuerpo forme una línea recta desde los hombros hasta las rodillas.' },
-                    { name: 'Step-ups', image: 'https://placehold.co/600x400/FFE4E6/9F1239?text=Step-ups', levels: { beginner: '3 series de 10 (cada pierna)', intermediate: '4 series de 12 (cada pierna)', advanced: '4 series de 15 (cada pierna)' }, description: 'Sube a un banco o escalón con un pie, y luego baja. Alterna las piernas en cada repetición.' },
-                ]},
-                'day-4': { title: 'Día 4: Hombros y Core', exercises: [
-                    { name: 'Press de Hombros', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Press+Hombros', levels: { beginner: '3 series de 10', intermediate: '4 series de 12', advanced: '4 series de 15' }, description: 'Sentado o de pie, sostén una mancuerna en cada mano a la altura de los hombros. Empuja las pesas hacia arriba hasta que los brazos estén completamente extendidos.' },
-                    { name: 'Elevaciones Laterales', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Elev.+Laterales', levels: { beginner: '3 series de 15', intermediate: '4 series de 15', advanced: '4 series de 20' }, description: 'De pie, sostén una mancuerna en cada mano a los lados. Levanta los brazos hacia los lados hasta que estén a la altura de los hombros.' },
-                    { name: 'Plancha', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Plancha', levels: { beginner: '3 series de 30s', intermediate: '4 series de 45s', advanced: '4 series de 60s' }, description: 'Mantén el cuerpo en línea recta, apoyado sobre los antebrazos y los dedos de los pies. Aprieta el abdomen y los glúteos.' },
-                    { name: 'Giros Rusos', image: 'https://placehold.co/600x400/FEF3C7/92400E?text=Giros+Rusos', levels: { beginner: '3 series de 15', intermediate: '4 series de 20', advanced: '4 series de 25' }, description: 'Siéntate en el suelo con las rodillas dobladas. Inclina el torso hacia atrás y gira el tronco de lado a lado.' },
-                ]}
-            };
-
-            function showPage(pageId) {
-                if (pageId === 'level-selection-page' || pageId === 'welcome-page') {
-                    header.classList.add('hidden');
-                    nav.classList.add('hidden');
-                } else {
-                    header.classList.remove('hidden');
-                    nav.classList.remove('hidden');
-                }
-
-                pages.forEach(page => {
-                    page.classList.toggle('active', page.id === pageId);
-                });
-            }
-
-            function renderWorkoutPage(dayId, level) {
-                const workout = workouts[dayId];
-                if (!workout) return;
-
-                let exercisesHTML = workout.exercises.map((ex, index) => `
-                    <div class="bg-slate-50 dark:bg-stone-800/50 p-4 rounded-2xl shadow-sm">
-                        <img src="${ex.image}" alt="Ilustración de ${ex.name}" class="w-full h-40 object-cover rounded-lg mb-4">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h4 class="font-bold text-slate-800 dark:text-slate-100">${ex.name}</h4>
-                                <p class="text-sm text-slate-500 dark:text-slate-400">${ex.levels[level]}</p>
-                            </div>
-                            <button class="info-btn p-2 rounded-full hover:bg-slate-200 dark:hover:bg-stone-700" data-target="desc-${dayId}-${index}">
-                                <svg class="w-6 h-6 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </button>
-                        </div>
-                        <p id="desc-${dayId}-${index}" class="text-sm text-slate-600 dark:text-slate-400 mt-2 hidden">${ex.description}</p>
-                    </div>
-                `).join('');
-
-                workoutDetailPage.innerHTML = `
-                    <div class="p-6 pb-20">
-                        <header class="flex items-center gap-4 mb-8">
-                            <button class="back-btn p-2 rounded-full hover:bg-slate-100 dark:hover:bg-stone-800">
-                                <svg class="w-6 h-6 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                            </button>
-                            <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">${workout.title}</h2>
-                        </header>
-                        <div class="space-y-4">${exercisesHTML}</div>
-                    </div>
-                `;
-                workoutDetailPage.querySelector('.back-btn').addEventListener('click', () => showPage('program-overview-page'));
-                
-                // Add event listeners for the new info buttons
-                workoutDetailPage.querySelectorAll('.info-btn').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const targetId = button.dataset.target;
-                        const descriptionEl = document.getElementById(targetId);
-                        if (descriptionEl) {
-                            descriptionEl.classList.toggle('hidden');
-                        }
-                    });
-                });
-
-                showPage('workout-detail-page');
-            }
-
-            levelButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    currentLevel = button.dataset.level;
-                    showPage('program-overview-page');
-                });
-            });
-
-            Object.keys(dayCards).forEach(cardId => {
-                const card = document.getElementById(cardId);
-                if(card) {
-                    card.addEventListener('click', () => {
-                        const dayId = cardId.replace('-card', '');
-                        renderWorkoutPage(dayId, currentLevel);
-                    });
-                }
-            });
-
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const pageId = button.dataset.page;
-                     if(document.getElementById(pageId)) {
-                        showPage(pageId);
-                        navButtons.forEach(btn => {
-                            btn.classList.remove('text-amber-600');
-                            btn.classList.add('text-slate-400', 'dark:text-slate-500');
-                        });
-                        button.classList.add('text-amber-600');
-                        button.classList.remove('text-slate-400', 'dark:text-slate-500');
-                     }
-                });
-            });
-
-            // Script para el modo oscuro
-            const themeToggleBtn = document.getElementById('theme-toggle');
-            const darkIcon = document.getElementById('theme-toggle-dark-icon');
-            const lightIcon = document.getElementById('theme-toggle-light-icon');
-
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                if(lightIcon) lightIcon.classList.remove('hidden');
-            } else {
-                document.documentElement.classList.remove('dark');
-                if(darkIcon) darkIcon.classList.remove('hidden');
-            }
-
-            if(themeToggleBtn) {
-                themeToggleBtn.addEventListener('click', function() {
-                    if(darkIcon) darkIcon.classList.toggle('hidden');
-                    if(lightIcon) lightIcon.classList.toggle('hidden');
-
-                    if (localStorage.getItem('color-theme')) {
-                        if (localStorage.getItem('color-theme') === 'light') {
-                            document.documentElement.classList.add('dark');
-                            localStorage.setItem('color-theme', 'dark');
-                        } else {
-                            document.documentElement.classList.remove('dark');
-                            localStorage.setItem('color-theme', 'light');
-                        }
-                    } else {
-                        if (document.documentElement.classList.contains('dark')) {
-                            document.documentElement.classList.remove('dark');
-                            localStorage.setItem('color-theme', 'light');
-                        } else {
-                            document.documentElement.classList.add('dark');
-                            localStorage.setItem('color-theme', 'dark');
-                        }
-                    }
-                });
-            }
-
-            // Lógica de Bienvenida y Perfil
-            const avatars = [
-                'https://placehold.co/64x64/FBCFE8/4A2E0A?text=👩',
-                'https://placehold.co/64x64/BFDBFE/1E3A8A?text=👨',
-                'https://placehold.co/64x64/A7F3D0/065F46?text=🧑',
-                'https://placehold.co/64x64/FDE68A/92400E?text=💪',
-                'https://placehold.co/64x64/C7D2FE/3730A3?text=🧘',
-                'https://placehold.co/64x64/FECACA/991B1B?text=🏃',
-                'https://placehold.co/64x64/D1FAE5/047857?text=🤸',
-                'https://placehold.co/64x64/E9D5FF/5B21B6?text=🏋️',
-            ];
-
-            avatars.forEach(avatarUrl => {
-                const img = document.createElement('img');
-                img.src = avatarUrl;
-                img.className = 'w-16 h-16 rounded-full cursor-pointer hover:opacity-75 transition';
-                avatarGrid.appendChild(img);
-                img.addEventListener('click', () => {
-                    document.querySelectorAll('#avatar-grid img').forEach(i => i.classList.remove('avatar-selected'));
-                    img.classList.add('avatar-selected');
-                    selectedAvatar = avatarUrl;
-                });
-            });
-
-            continueBtn.addEventListener('click', () => {
-                const name = nameInput.value.trim();
-                if (name === '') {
-                    alert('Por favor, escribe tu nombre.');
-                    return;
-                }
-                localStorage.setItem('userName', name);
-                localStorage.setItem('userAvatar', selectedAvatar);
-                updateProfile(name, selectedAvatar);
-                showPage('level-selection-page');
-            });
-
-            function updateProfile(name, avatarUrl) {
-                greeting.textContent = `¡Hola, ${name}!`;
-                userAvatar.src = avatarUrl;
-            }
-
-            // Cargar perfil si existe
-            const savedName = localStorage.getItem('userName');
-            const savedAvatar = localStorage.getItem('userAvatar');
-            if (savedName && savedAvatar) {
-                updateProfile(savedName, savedAvatar);
-                showPage('program-overview-page');
-            } else {
-                showPage('welcome-page');
-            }
-
-            editProfileBtn.addEventListener('click', () => {
-                nameInput.value = localStorage.getItem('userName');
-                showPage('welcome-page');
-            });
-
-            deleteProfileBtn.addEventListener('click', () => {
-                if(confirm('¿Estás seguro de que quieres borrar tu perfil? Esta acción no se puede deshacer.')) {
-                    localStorage.removeItem('userName');
-                    localStorage.removeItem('userAvatar');
-                    window.location.reload();
-                }
-            });
-
-            if(changeLevelBtn) {
-                changeLevelBtn.addEventListener('click', () => showPage('level-selection-page'));
-            }
-
-        });
-    </script>
-
+    function renderWorkoutPage(dayId, level) {
+      const workout = workouts[dayId];
+      const container = document.getElementById('workout-detail-page');
+      container.innerHTML = `
+        <h2 class="text-lg font-bold mt-4">${workout.title}</h2>
+        <ul class="mt-2 space-y-2">
+          ${workout.exercises.map(ex => `
+            <li class="p-2 border rounded bg-white">
+              <div class="flex justify-between items-center">
+                <div><strong>${ex.name}</strong>: <span class="text-gray-600">${ex.description}</span></div>
+                <button onclick="speak('${ex.name}: ${ex.description}')" class="ml-2 text-sm text-blue-500 hover:underline">🔊</button>
+              </div>
+            </li>
+          `).join('')}
+        </ul>
+      `;
+      container.classList.add('active');
+    }
+  </script>
 </body>
 </html>
