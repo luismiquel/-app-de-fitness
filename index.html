@@ -1,171 +1,195 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>App Fitness Mejorada Final</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rutina de Ejercicios</title>
   <style>
     :root {
-      --bg-light: #f9f9f9;
-      --bg-dark: #2e2e2e;
-      --sidebar-light: #e0e0e0;
-      --sidebar-dark: #3a3a3a;
-      --btn-active-light: #c0c0c0;
-      --btn-active-dark: #555555;
-      --font-light: #222222;
-      --font-dark: #eeeeee;
-      --font-main: 'Segoe UI', Tahoma, sans-serif;
+      --bg-light: #f8f9fa;
+      --bg-dark: #121212;
+      --font-light: #212529;
+      --font-dark: #f1f1f1;
+      --primary: #007bff;
+      --sidebar-bg: #e9ecef;
+      --sidebar-dark: #1e1e1e;
+      --btn-active: #007bff;
+      --btn-active-dark: #0d6efd;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      display: flex;
-      min-height: 100vh;
-      font-family: var(--font-main);
-      color: var(--font-light);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       background: var(--bg-light);
-      transition: background 0.3s, color 0.3s;
+      color: var(--font-light);
+      transition: all 0.3s ease;
     }
-    .sidebar {
-      width: 200px;
-      background: var(--sidebar-light);
-      padding: 20px;
-      border-right: 1px solid #ccc;
-    }
-    .day-btn {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 8px;
-      background: none;
-      border: none;
-      text-align: left;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .day-btn.active { background: var(--btn-active-light); font-weight: bold; }
-    .toggle-btn {
-      margin-top: 20px;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      font-size: 16px;
-      border-radius: 4px;
-      background: #ffd54f;
-      cursor: pointer;
-    }
-    .content { flex: 1; padding: 20px; overflow-y: auto; }
-    .day-content { display: none; }
-    .day-content.active { display: block; }
-    .day-content h2 {
-      margin-bottom: 12px;
-      font-size: 26px;
-      border-bottom: 2px solid #888;
-      padding-bottom: 6px;
-    }
-    .ejercicio {
-      background: #fafafa;
-      border-radius: 6px;
-      margin-bottom: 12px;
-      padding: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 18px;
-      line-height: 1.3;
-    }
-    .audio-btn { font-size: 24px; background: none; border: none; cursor: pointer; }
-    @media(max-width: 600px) {
-      body { flex-direction: column; }
-      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #ccc; display: flex; overflow-x: auto; }
-      .day-btn { flex: none; margin-right: 10px; }
-      .toggle-btn { flex: none; }
-    }
+
     body.dark {
       background: var(--bg-dark);
       color: var(--font-dark);
     }
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: var(--sidebar-bg);
+      padding: 20px;
+      height: 100vh;
+    }
+
     body.dark .sidebar {
       background: var(--sidebar-dark);
       color: var(--font-dark);
     }
+
+    .day-btn {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background: transparent;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .day-btn.active {
+      background: var(--btn-active);
+      color: white;
+    }
+
     body.dark .day-btn.active {
       background: var(--btn-active-dark);
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .ejercicio {
+      margin: 15px 0;
+      padding: 12px;
+      border-left: 5px solid var(--primary);
+      background: #f1f1f1;
+      color: #333;
+    }
+
+    body.dark .ejercicio {
+      background: #444;
+      color: #eee;
+    }
+
+    .modo-oscuro {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .ejercicio button {
+      margin-left: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <button class="day-btn active" data-day="1">Día 1</button>
-    <button class="day-btn" data-day="2">Día 2</button>
-    <button class="day-btn" data-day="3">Día 3</button>
-    <button class="day-btn" data-day="4">Día 4</button>
-    <button class="toggle-btn" onclick="toggleDark()">🌙 Modo Oscuro</button>
-  </div>
-
-  <div class="content">
-    <!-- Día 1 -->
-    <div class="day-content active" data-day="1">
-      <h2>Día 1: Pecho y Tríceps — 3×15</h2>
-      <div class="ejercicio"><span><strong>Flexiones</strong>: tumbado boca abajo…</span><button class="audio-btn" onclick="read('Flexiones...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Press de banca</strong>: acuéstate en un banco…</span><button class="audio-btn" onclick="read('Press de banca...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Fondos</strong>: usa bancos paralelos…</span><button class="audio-btn" onclick="read('Fondos...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Aperturas con mancuerna</strong>: acuéstate…</span><button class="audio-btn" onclick="read('Aperturas con mancuerna...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Press inclinado</strong>: banco 30–45°…</span><button class="audio-btn" onclick="read('Press inclinado...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Extensión tríceps</strong>: mancuerna detrás de la cabeza…</span><button class="audio-btn" onclick="read('Extensión de tríceps...')">🔊</button></div>
+  <div class="modo-oscuro" onclick="toggleDarkMode()">🌙 Modo Oscuro</div>
+  <div class="container">
+    <div class="sidebar">
+      <button class="day-btn active" onclick="mostrarDia(1)">Día 1</button>
+      <button class="day-btn" onclick="mostrarDia(2)">Día 2</button>
+      <button class="day-btn" onclick="mostrarDia(3)">Día 3</button>
+      <button class="day-btn" onclick="mostrarDia(4)">Día 4</button>
     </div>
-    <!-- Día 2 -->
-    <div class="day-content" data-day="2">
-      <h2>Día 2: Espalda y Bíceps — 4×20</h2>
-      <div class="ejercicio"><span><strong>Jalones al pecho</strong>: siéntate y baja la barra…</span><button class="audio-btn" onclick="read('Jalones al pecho...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Remo con barra</strong>: inclínate y tira la barra…</span><button class="audio-btn" onclick="read('Remo con barra...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Peso muerto</strong>: con espalda recta, baja y sube…</span><button class="audio-btn" onclick="read('Peso muerto...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Curl bíceps</strong>: de pie con mancuernas…</span><button class="audio-btn" onclick="read('Curl bíceps...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Pull-aparts</strong>: con banda…</span><button class="audio-btn" onclick="read('Pull-aparts...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Remo con mancuerna</strong>: apoya en banco…</span><button class="audio-btn" onclick="read('Remo con mancuerna...')">🔊</button></div>
-    </div>
-    <!-- Día 3 -->
-    <div class="day-content" data-day="3">
-      <h2>Día 3: Piernas y Glúteos — 5×25</h2>
-      <div class="ejercicio"><span><strong>Sentadillas</strong>: baja caderas sin curvar espalda.</span><button class="audio-btn" onclick="read('Sentadillas...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Zancadas</strong>: paso adelante y baja.</span><button class="audio-btn" onclick="read('Zancadas...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Prensa de pierna</strong>: empuja plataforma con pies.</span><button class="audio-btn" onclick="read('Prensa...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Peso muerto rumano</strong>: bajas y subes manteniendo tensión.</span><button class="audio-btn" onclick="read('Peso muerto rumano...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Puente glúteos</strong>: levantas caderas al suelo.</span><button class="audio-btn" onclick="read('Puente glúteos...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Step-ups</strong>: sube al banco con una pierna.</span><button class="audio-btn" onclick="read('Step-ups...')">🔊</button></div>
-    </div>
-    <!-- Día 4 -->
-    <div class="day-content" data-day="4">
-      <h2>Día 4: Hombros y Core — 6×30</h2>
-      <div class="ejercicio"><span><strong>Press militar</strong>: empuja mancuernas desde hombros.</span><button class="audio-btn" onclick="read('Press militar...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Elevaciones laterales</strong>: levantas brazos al lado.</span><button class="audio-btn" onclick="read('Elevaciones laterales...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Elevaciones frontales</strong>: levantas brazos al frente.</span><button class="audio-btn" onclick="read('Elevaciones frontales...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Plancha</strong>: cuerpo recto sobre antebrazos.</span><button class="audio-btn" onclick="read('Plancha...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Crunch</strong>: subes tronco hacia rodillas.</span><button class="audio-btn" onclick="read('Crunch...')">🔊</button></div>
-      <div class="ejercicio"><span><strong>Bicicleta abdominal</strong>: tocas codo contrario rodilla.</span><button class="audio-btn" onclick="read('Bicicleta abdominal...')">🔊</button></div>
+    <div class="content" id="contenido">
+      <!-- Ejercicios renderizados aquí -->
     </div>
   </div>
 
   <script>
-    // Sidebar toggle entre días
-    document.querySelectorAll('.day-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.day-btn').forEach(b => b.classList.toggle('active', b === btn));
-        const day = btn.dataset.day;
-        document.querySelectorAll('.day-content').forEach(c => {
-          c.classList.toggle('active', c.dataset.day === day);
-        });
+    const rutina = {
+      1: {
+        titulo: "Día 1: Pecho y Tríceps — 3×15",
+        ejercicios: [
+          ["Flexiones", "Ejercicio básico para pecho."],
+          ["Press de Banca", "Ejercicio de fuerza para pecho."],
+          ["Fondos", "Activa tríceps y pecho."],
+          ["Aperturas con mancuerna", "Estira fibras pectorales."],
+          ["Press inclinado", "Trabaja la parte superior del pecho."],
+          ["Extensión de tríceps", "Aísla el tríceps para fortalecerlo."]
+        ]
+      },
+      2: {
+        titulo: "Día 2: Espalda y Bíceps — 4×20",
+        ejercicios: [
+          ["Remo con barra", "Ejercicio para fortalecer toda la espalda."],
+          ["Jalón al pecho", "Enfocado en dorsales."],
+          ["Peso muerto", "Fortalece la espalda baja."],
+          ["Curl de bíceps", "Aísla los bíceps."],
+          ["Martillo", "Trabaja el braquiorradial y el bíceps."],
+          ["Dominadas", "Ejercicio completo para espalda y brazos."]
+        ]
+      },
+      3: {
+        titulo: "Día 3: Piernas y Glúteos — 5×25",
+        ejercicios: [
+          ["Sentadillas", "Básico para cuádriceps y glúteos."],
+          ["Zancadas", "Trabaja piernas y estabilidad."],
+          ["Prensa", "Aísla cuádriceps y glúteos."],
+          ["Peso muerto rumano", "Enfocado en isquiotibiales y glúteos."],
+          ["Elevación de talones", "Trabaja los gemelos."],
+          ["Puente de glúteo", "Activa y fortalece los glúteos."]
+        ]
+      },
+      4: {
+        titulo: "Día 4: Hombros y Core — 6×30",
+        ejercicios: [
+          ["Press militar", "Empuja mancuernas desde hombros."],
+          ["Elevaciones laterales", "Levantas brazos al lado."],
+          ["Elevaciones frontales", "Levantas brazos al frente."],
+          ["Plancha", "Cuerpo recto sobre antebrazos."],
+          ["Crunch", "Subes tronco hacia rodillas."],
+          ["Bicicleta abdominal", "Tocas codo contrario rodilla."]
+        ]
+      }
+    };
+
+    function mostrarDia(dia) {
+      const contenido = document.getElementById("contenido");
+      const datos = rutina[dia];
+      document.querySelectorAll(".day-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll(".day-btn")[dia - 1].classList.add("active");
+
+      contenido.innerHTML = `<h2>${datos.titulo}</h2>`;
+      datos.ejercicios.forEach(([nombre, descripcion]) => {
+        contenido.innerHTML += `
+          <div class="ejercicio">
+            <strong>${nombre}</strong>
+            <button onclick="leer('${descripcion}')">🔊</button>
+            <div>${descripcion}</div>
+          </div>
+        `;
       });
-    });
-    // Modo oscuro
-    function toggleDark() {
-      document.body.classList.toggle('dark');
     }
-    // Voz
-    function read(text) {
-      const msg = new SpeechSynthesisUtterance(text);
-      msg.lang = 'es-ES';
-      window.speechSynthesis.speak(msg);
+
+    function leer(texto) {
+      const speech = new SpeechSynthesisUtterance(texto);
+      speech.lang = 'es-ES';
+      window.speechSynthesis.speak(speech);
     }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    // Cargar Día 1 por defecto
+    mostrarDia(1);
   </script>
 </body>
 </html>
