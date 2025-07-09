@@ -1,64 +1,87 @@
-<section id="ejercicios" class="max-w-lg mx-auto p-4">
-  <h2 class="text-2xl font-bold text-center mb-4 text-slate-800 dark:text-slate-200">Ejercicios por Día</h2>
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App de Fitness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+  <div class="min-h-screen flex flex-col items-center justify-center p-4">
 
-  <!-- Pestañas -->
-  <div class="flex justify-center gap-2 mb-4">
-    <button class="tab-btn active px-4 py-2 rounded-lg" data-day="1">Día 1</button>
-    <button class="tab-btn px-4 py-2 rounded-lg" data-day="2">Día 2</button>
-    <button class="tab-btn px-4 py-2 rounded-lg" data-day="3">Día 3</button>
-    <button class="tab-btn px-4 py-2 rounded-lg" data-day="4">Día 4</button>
+    <h1 class="text-3xl font-bold mb-6">Ejercicios por Día</h1>
+
+    <!-- Toggle de modo oscuro -->
+    <button id="theme-toggle" class="mb-4 px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded">
+      Cambiar Modo Claro/Oscuro
+    </button>
+
+    <!-- Botones de pestañas -->
+    <div class="flex flex-wrap justify-center gap-2 mb-4">
+      <button class="tab-btn px-4 py-2 rounded bg-amber-500 text-white" data-day="1">Día 1</button>
+      <button class="tab-btn px-4 py-2 rounded bg-gray-300 dark:bg-gray-700" data-day="2">Día 2</button>
+      <button class="tab-btn px-4 py-2 rounded bg-gray-300 dark:bg-gray-700" data-day="3">Día 3</button>
+      <button class="tab-btn px-4 py-2 rounded bg-gray-300 dark:bg-gray-700" data-day="4">Día 4</button>
+    </div>
+
+    <!-- Contenido de ejercicios -->
+    <div class="w-full max-w-md">
+      <div class="tab-content space-y-2" data-day="1">
+        <h2 class="text-xl font-semibold">Día 1: Pecho y Tríceps</h2>
+        <ul class="list-disc list-inside">
+          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
+          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
+        </ul>
+      </div>
+      <!-- Puedes agregar más div.tab-content para otros días -->
+    </div>
+
   </div>
 
-  <!-- Contenido por día -->
-  <div class="tab-content active space-y-2" data-day="1">
-    <h3 class="text-xl font-semibold text-slate-700 dark:text-slate-100">Día 1: Pecho y Tríceps</h3>
-    <ul class="list-disc list-inside space-y-1 text-slate-600 dark:text-slate-300">
-      <li>Flexiones <button class="voz-btn ml-1 text-amber-500">🔊</button></li>
-      <li>Press de Banca <button class="voz-btn ml-1 text-amber-500">🔊</button></li>
-      <li>Fondos <button class="voz-btn ml-1 text-amber-500">🔊</button></li>
-      <li>Aperturas con mancuerna <button class="voz-btn ml-1 text-amber-500">🔊</button></li>
-      <li>Press inclinado <button class="voz-btn ml-1 text-amber-500">🔊</button></li>
-      <li>Extensión de tríceps <button class="voz-btn ml-1 text-amber-500">🔊</button></li>
-    </ul>
-  </div>
+  <script>
+    // Cambiar pestañas
+    document.querySelectorAll('.tab-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const day = button.dataset.day;
 
-  <!-- Repite para días 2-4... -->
-  <!-- (Puedes copiar el contenido anterior y solo cambiar el contenido visible) -->
+        // Estilos
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.remove('bg-amber-500', 'text-white');
+          btn.classList.add('bg-gray-300', 'dark:bg-gray-700');
+        });
+        button.classList.add('bg-amber-500', 'text-white');
 
-</section>
-
-<!-- Script para pestañas, voz y modo oscuro toggle -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Toggle de pestañas
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const day = btn.dataset.day;
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('bg-amber-500 text-white', b === btn));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('hidden', c.dataset.day !== day));
+        // Mostrar contenido
+        document.querySelectorAll('.tab-content').forEach(tab => {
+          tab.style.display = tab.dataset.day === day ? 'block' : 'none';
+        });
       });
     });
 
-    // Voz explicativa
-    document.addEventListener('click', e => {
-      if (e.target.classList.contains('voz-btn')) {
-        const descriptions = {
-          'Flexiones': 'Colócate boca abajo...',
-          'Press de Banca': 'Acuéstate en un banco...',
-          // Agrega uno por ejercicio real
-        };
-        const name = e.target.parentNode.textContent.trim().split('🔊')[0].trim();
-        const texto = descriptions[name] || 'Descripción no disponible.';
-        speechSynthesis.speak(new SpeechSynthesisUtterance(texto));
-      }
+    // Voz
+    document.querySelectorAll('.voz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ejercicio = btn.parentElement.textContent.trim().replace('🔊', '');
+        const texto = `${ejercicio}. Aquí va la explicación del ejercicio.`;
+        const speech = new SpeechSynthesisUtterance(texto);
+        speech.lang = 'es-ES';
+        speechSynthesis.speak(speech);
+      });
     });
 
     // Modo oscuro
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    if (themeToggleBtn) {
-      themeToggleBtn.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-      });
-    }
-  });
-</script>
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // Mostrar solo Día 1 al inicio
+    document.querySelectorAll('.tab-content').forEach(tab => {
+      tab.style.display = tab.dataset.day === "1" ? 'block' : 'none';
+    });
+  </script>
+</body>
+</html>
