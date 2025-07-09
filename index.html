@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rutina de Ejercicios</title>
+  <title>Rutina de Ejercicios Detallada</title>
   <style>
     :root {
       --bg-light: #f8f9fa;
@@ -33,13 +33,16 @@
 
     .container {
       display: flex;
+      height: calc(100vh - 40px);
+      margin-top: 40px;
     }
 
     .sidebar {
       width: 220px;
       background: var(--sidebar-bg);
       padding: 20px;
-      height: 100vh;
+      height: 100%;
+      box-sizing: border-box;
     }
 
     body.dark .sidebar {
@@ -55,7 +58,12 @@
       border: none;
       text-align: left;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      transition: background 0.2s;
+    }
+
+    .day-btn:hover {
+      background: rgba(0,0,0,0.05);
     }
 
     .day-btn.active {
@@ -70,14 +78,16 @@
     .content {
       flex: 1;
       padding: 30px;
+      overflow-y: auto;
     }
 
     .ejercicio {
       margin: 15px 0;
-      padding: 12px;
+      padding: 15px;
       border-left: 5px solid var(--primary);
       background: #f1f1f1;
       color: #333;
+      border-radius: 6px;
     }
 
     body.dark .ejercicio {
@@ -85,77 +95,88 @@
       color: #eee;
     }
 
-    .modo-oscuro {
-      position: fixed;
-      top: 10px;
-      right: 20px;
-      cursor: pointer;
+    .ejercicio strong {
       font-size: 20px;
+    }
+
+    .ejercicio p {
+      margin: 8px 0;
+      font-size: 16px;
     }
 
     .ejercicio button {
       margin-left: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .modo-oscuro {
+      position: fixed;
+      top: 5px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 24px;
     }
   </style>
 </head>
 <body>
-  <div class="modo-oscuro" onclick="toggleDarkMode()">🌙 Modo Oscuro</div>
+  <div class="modo-oscuro" onclick="toggleDarkMode()">🌙</div>
+
   <div class="container">
     <div class="sidebar">
-      <button class="day-btn active" onclick="mostrarDia(1)">Día 1</button>
-      <button class="day-btn" onclick="mostrarDia(2)">Día 2</button>
-      <button class="day-btn" onclick="mostrarDia(3)">Día 3</button>
-      <button class="day-btn" onclick="mostrarDia(4)">Día 4</button>
+      <button class="day-btn active" onclick="mostrarDia(1)">Día 1</button>
+      <button class="day-btn" onclick="mostrarDia(2)">Día 2</button>
+      <button class="day-btn" onclick="mostrarDia(3)">Día 3</button>
+      <button class="day-btn" onclick="mostrarDia(4)">Día 4</button>
     </div>
-    <div class="content" id="contenido">
-      <!-- Ejercicios renderizados aquí -->
-    </div>
+
+    <div class="content" id="contenido"></div>
   </div>
 
   <script>
     const rutina = {
       1: {
-        titulo: "Día 1: Pecho y Tríceps — 3×15",
+        titulo: "Día 1: Pecho y Tríceps — 3×15",
         ejercicios: [
-          ["Flexiones", "Ejercicio básico para pecho."],
-          ["Press de Banca", "Ejercicio de fuerza para pecho."],
-          ["Fondos", "Activa tríceps y pecho."],
-          ["Aperturas con mancuerna", "Estira fibras pectorales."],
-          ["Press inclinado", "Trabaja la parte superior del pecho."],
-          ["Extensión de tríceps", "Aísla el tríceps para fortalecerlo."]
+          ["Flexiones", "Colócate boca abajo con manos a la altura de los hombros. Empuja el suelo manteniendo la espalda recta y baja hasta casi rozar el pecho."],
+          ["Press de Banca", "Acuéstate en un banco, baja la barra hasta el pecho y empuja hasta extender los brazos totalmente."],
+          ["Fondos", "Apoya las manos en dos bancos, baja el tronco flexionando codos 90° y sube estirando."],
+          ["Aperturas con mancuerna", "Con mancuernas en ambos brazos, ábrelos lateralmente manteniendo ligera flexión de codos."],
+          ["Press inclinado", "En banco inclinado 30‑45°, empuja mancuernas o barra desde el pecho hacia arriba."],
+          ["Extensión de tríceps", "De pie con mancuerna o cuerda, extiende el brazo hacia abajo manteniendo codo fijo."]
         ]
       },
       2: {
-        titulo: "Día 2: Espalda y Bíceps — 4×20",
+        titulo: "Día 2: Espalda y Bíceps — 4×20",
         ejercicios: [
-          ["Remo con barra", "Ejercicio para fortalecer toda la espalda."],
-          ["Jalón al pecho", "Enfocado en dorsales."],
-          ["Peso muerto", "Fortalece la espalda baja."],
-          ["Curl de bíceps", "Aísla los bíceps."],
-          ["Martillo", "Trabaja el braquiorradial y el bíceps."],
-          ["Dominadas", "Ejercicio completo para espalda y brazos."]
+          ["Remo con barra", "Inclínate ligeramente, espalda recta, tira de la barra hasta el abdomen controlando al bajar."],
+          ["Jalón al pecho", "Sentado, agarra la barra ancha y llévala al pecho mientras retraes omóplatos."],
+          ["Peso muerto", "Con barra en suelo, baja caderas, espalda recta y sube manteniendo la barra cerca del cuerpo."],
+          ["Curl bíceps", "De pie con mancuernas, flexiona el brazo hacia el hombro manteniendo codo fijo."],
+          ["Curl martillo", "Como curl tradicional, pero con mango neutro, elevando con antebrazo."],
+          ["Dominadas", "Cuélgate con agarre ancho y tira del cuerpo hacia arriba hasta que la barbilla sobrepase la barra."]
         ]
       },
       3: {
-        titulo: "Día 3: Piernas y Glúteos — 5×25",
+        titulo: "Día 3: Piernas y Glúteos — 5×25",
         ejercicios: [
-          ["Sentadillas", "Básico para cuádriceps y glúteos."],
-          ["Zancadas", "Trabaja piernas y estabilidad."],
-          ["Prensa", "Aísla cuádriceps y glúteos."],
-          ["Peso muerto rumano", "Enfocado en isquiotibiales y glúteos."],
-          ["Elevación de talones", "Trabaja los gemelos."],
-          ["Puente de glúteo", "Activa y fortalece los glúteos."]
+          ["Sentadillas", "Con pies al ancho de hombros, baja caderas como si fueras a una silla y sube manteniendo espalda recta."],
+          ["Zancadas", "Paso hacia adelante, baja rodillas a 90° y extiende para volver a posición inicial."],
+          ["Prensa de piernas", "Empuja la plataforma con pies al ancho de hombros sin bloquear rodillas."],
+          ["Peso muerto rumano", "Con piernas rectas, desciende la barra controlando la bajada, activando isquios."],
+          ["Elevación de talones", "De pie o sentado, sube talones para trabajar gemelos."],
+          ["Puente de glúteo", "Acuéstate, eleva caderas apretando glúteos hasta formar línea recta."]
         ]
       },
       4: {
-        titulo: "Día 4: Hombros y Core — 6×30",
+        titulo: "Día 4: Hombros y Core — 6×30",
         ejercicios: [
-          ["Press militar", "Empuja mancuernas desde hombros."],
-          ["Elevaciones laterales", "Levantas brazos al lado."],
-          ["Elevaciones frontales", "Levantas brazos al frente."],
-          ["Plancha", "Cuerpo recto sobre antebrazos."],
-          ["Crunch", "Subes tronco hacia rodillas."],
-          ["Bicicleta abdominal", "Tocas codo contrario rodilla."]
+          ["Press militar", "Sentado o de pie, empuja mancuernas desde los hombros hasta estirar los brazos."],
+          ["Elevaciones laterales", "De pie, levanta brazos lateralmente hasta el nivel de los hombros."],
+          ["Elevaciones frontales", "Levanta brazos al frente hasta la altura de los hombros."],
+          ["Plancha", "Sostén tu cuerpo en línea recta sobre antebrazos y pies, apreta el abdomen."],
+          ["Crunch", "Acuéstate, flexiona tronco hacia rodillas sin tirar del cuello."],
+          ["Bicicleta abdominal", "En suelo, rota tronco llevando codo a rodilla opuesta de forma alterna."]
         ]
       }
     };
@@ -167,28 +188,26 @@
       document.querySelectorAll(".day-btn")[dia - 1].classList.add("active");
 
       contenido.innerHTML = `<h2>${datos.titulo}</h2>`;
-      datos.ejercicios.forEach(([nombre, descripcion]) => {
+      datos.ejercicios.forEach(([nombre, desc]) => {
         contenido.innerHTML += `
           <div class="ejercicio">
             <strong>${nombre}</strong>
-            <button onclick="leer('${descripcion}')">🔊</button>
-            <div>${descripcion}</div>
-          </div>
-        `;
+            <button onclick="leer('${desc}')">🔊</button>
+            <p>${desc}</p>
+          </div>`;
       });
     }
 
     function leer(texto) {
-      const speech = new SpeechSynthesisUtterance(texto);
-      speech.lang = 'es-ES';
-      window.speechSynthesis.speak(speech);
+      const msg = new SpeechSynthesisUtterance(texto);
+      msg.lang = 'es-ES';
+      window.speechSynthesis.speak(msg);
     }
 
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
     }
 
-    // Cargar Día 1 por defecto
     mostrarDia(1);
   </script>
 </body>
