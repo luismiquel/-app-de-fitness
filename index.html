@@ -1,123 +1,221 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial‑scale=1.0" />
-  <title>App Fitness Progresiva</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>App Fitness con Sidebar</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .sidebar {
+      width: 200px;
+      background: #ddd;
+      padding-top: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    .sidebar .day-btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .sidebar .day-btn.active {
+      background: #bbb;
+      font-weight: bold;
+    }
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .ejercicio {
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+    body.dark .sidebar {
+      background: #444;
+      color: #eee;
+    }
+    body.dark .day-btn.active {
+      background: #666;
+    }
+    body.dark .content {
+      background: #333;
+      color: #eee;
+    }
+    body.dark .ejercicio {
+      background: #555;
+    }
+    button {
+      cursor: pointer;
+    }
+    .day-colors {
+      --c1: #e0f7fa;
+      --c2: #ffecb3;
+      --c3: #fce4ec;
+      --c4: #e8f5e9;
+    }
+  </style>
 </head>
-<body class="bg-white dark:bg-gray‑900 text-gray‑900 dark:text-gray‑100 transition-colors duration-300">
-  <div class="min-h-screen flex flex-col items-center justify-center p-4">
+<body>
+  <div class="sidebar">
+    <button class="day-btn active" data-day="1">Día 1</button>
+    <button class="day-btn" data-day="2">Día 2</button>
+    <button class="day-btn" data-day="3">Día 3</button>
+    <button class="day-btn" data-day="4">Día 4</button>
+    <hr>
+    <button onclick="toggleDark()">🌙 Modo Claro/Oscuro</button>
+  </div>
 
-    <h1 class="text-3xl font-bold mb-6">Rutina Semanal Progresiva</h1>
-
-    <!-- Toggle modo oscuro -->
-    <button id="theme-toggle" class="mb-4 px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-lg">
-      Cambiar modo claro/oscuro
-    </button>
-
-    <!-- Pestañas -->
-    <div class="flex flex-wrap justify-center gap-2 mb-4">
-      <button class="tab-btn px-4 py-2 rounded-lg bg-amber-500 text-white" data-day="1">Día 1</button>
-      <button class="tab-btn px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-700" data-day="2">Día 2</button>
-      <button class="tab-btn px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-700" data-day="3">Día 3</button>
-      <button class="tab-btn px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-700" data-day="4">Día 4</button>
-    </div>
-
-    <!-- Contenidos Día 1–4 -->
-    <div class="w-full max-w-lg">
-      <!-- Día 1 -->
-      <div class="tab-content" data-day="1">
-        <h2 class="text-xl font-semibold mb-2">Día 1: Pecho y Tríceps — 3×15</h2>
-        <ul class="list-disc list-inside">
-          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
-        </ul>
+  <div class="content">
+    <!-- Día 1 -->
+    <div class="day-content" data-day="1">
+      <h2>Día 1: Pecho y Tríceps — 3×15</h2>
+      <div class="ejercicio" style="background: var(--c1);">
+        <span>Flexiones</span>
+        <button onclick="read('Flexiones: ejercicio básico para pecho')">🔊</button>
       </div>
-      <!-- Día 2 -->
-      <div class="tab-content hidden" data-day="2">
-        <h2 class="text-xl font-semibold mb-2">Día 2: Pecho y Tríceps — 4×20</h2>
-        <ul class="list-disc list-inside">
-          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
-        </ul>
+      <div class="ejercicio" style="background: var(--c1);">
+        <span>Press de Banca</span>
+        <button onclick="read('Press de banca: ejercicio de fuerza para pecho')">🔊</button>
       </div>
-      <!-- Día 3 -->
-      <div class="tab-content hidden" data-day="3">
-        <h2 class="text-xl font-semibold mb-2">Día 3: Pecho y Tríceps — 4×25</h2>
-        <ul class="list-disc list-inside">
-          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
-        </ul>
+      <div class="ejercicio" style="background: var(--c1);">
+        <span>Fondos</span>
+        <button onclick="read('Fondos: activa tríceps y pecho')">🔊</button>
       </div>
-      <!-- Día 4 -->
-      <div class="tab-content hidden" data-day="4">
-        <h2 class="text-xl font-semibold mb-2">Día 4: Pecho y Tríceps — 5×30</h2>
-        <ul class="list-disc list-inside">
-          <li>Flexiones <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press de Banca <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Fondos <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Aperturas con mancuerna <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Press inclinado <button class="voz-btn text-amber-500">🔊</button></li>
-          <li>Extensión de tríceps <button class="voz-btn text-amber-500">🔊</button></li>
-        </ul>
+      <div class="ejercicio" style="background: var(--c1);">
+        <span>Aperturas con mancuerna</span>
+        <button onclick="read('Aperturas con mancuerna: estira fibras pectorales')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c1);">
+        <span>Press inclinado</span>
+        <button onclick="read('Press inclinado: parte superior del pecho')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c1);">
+        <span>Extensión de tríceps</span>
+        <button onclick="read('Extensión de tríceps: aísla el tríceps')">🔊</button>
       </div>
     </div>
 
+    <!-- Día 2 -->
+    <div class="day-content" data-day="2" hidden>
+      <h2>Día 2: Espalda y Bíceps — 4×20</h2>
+      <div class="ejercicio" style="background: var(--c2);">
+        <span>Jalones al pecho</span>
+        <button onclick="read('Jalones al pecho: trabaja dorsales y parte superior de la espalda')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c2);">
+        <span>Remo con barra</span>
+        <button onclick="read('Remo con barra: fortalece la espalda media')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c2);">
+        <span>Peso muerto</span>
+        <button onclick="read('Peso muerto: trabaja glúteos y parte baja de la espalda')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c2);">
+        <span>Curl con mancuernas</span>
+        <button onclick="read('Curl con mancuernas: fortalece bíceps')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c2);">
+        <span>Curl concentrado</span>
+        <button onclick="read('Curl concentrado: aislamiento de bíceps')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c2);">
+        <span>Curl martillo</span>
+        <button onclick="read('Curl martillo: trabaja braquial y antebrazo')">🔊</button>
+      </div>
+    </div>
+
+    <!-- Día 3 -->
+    <div class="day-content" data-day="3" hidden>
+      <h2>Día 3: Piernas y Glúteos — 5×25</h2>
+      <div class="ejercicio" style="background: var(--c3);">
+        <span>Sentadillas</span>
+        <button onclick="read('Sentadillas: trabajan piernas y glúteos')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c3);">
+        <span>Prensa de piernas</span>
+        <button onclick="read('Prensa de piernas: fortalece los cuádriceps')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c3);">
+        <span>Zancadas con mancuernas</span>
+        <button onclick="read('Zancadas con mancuernas: trabajan piernas y estabilidad')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c3);">
+        <span>Peso muerto rumano</span>
+        <button onclick="read('Peso muerto rumano: fortalece isquiotibiales y glúteos')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c3);">
+        <span>Elevación de talones</span>
+        <button onclick="read('Elevación de talones: trabaja gemelos')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c3);">
+        <span>Puente de glúteos</span>
+        <button onclick="read('Puente de glúteos: fortalece glúteos y core')">🔊</button>
+      </div>
+    </div>
+
+    <!-- Día 4 -->
+    <div class="day-content" data-day="4" hidden>
+      <h2>Día 4: Hombros y Core — 6×30</h2>
+      <div class="ejercicio" style="background: var(--c4);">
+        <span>Press militar</span>
+        <button onclick="read('Press militar: trabaja hombros')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c4);">
+        <span>Elevaciones laterales</span>
+        <button onclick="read('Elevaciones laterales: fortalece deltoides laterales')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c4);">
+        <span>Elevaciones frontales</span>
+        <button onclick="read('Elevaciones frontales: trabaja los deltoides frontales')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c4);">
+        <span>Plancha (30 s)</span>
+        <button onclick="read('Plancha: fortalece core y estabilidad')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c4);">
+        <span>Crunch abdominal</span>
+        <button onclick="read('Crunch abdominal: trabaja recto abdominal')">🔊</button>
+      </div>
+      <div class="ejercicio" style="background: var(--c4);">
+        <span>Bicicleta abdominal</span>
+        <button onclick="read('Bicicleta abdominal: activa oblicuos y core')">🔊</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Pestañas
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const day = btn.dataset.day;
-        document.querySelectorAll('.tab-btn').forEach(b => {
-          b.classList.toggle('bg-amber-500', b === btn);
-          b.classList.toggle('text-white', b === btn);
-          b.classList.toggle('bg-gray-300', b !== btn);
-          b.classList.toggle('dark:bg-gray-700', b !== btn);
-        });
-        document.querySelectorAll('.tab-content').forEach(c => {
-          c.classList.toggle('hidden', c.dataset.day !== day);
-        });
+        document.querySelectorAll('.day-btn').forEach(b => b.classList.toggle('active', b === btn));
+        document.querySelectorAll('.day-content').forEach(c => c.hidden = c.dataset.day !== day);
       });
     });
 
-    // Voz explicativa
-    const explicaciones = {
-      'Flexiones': 'Colócate boca abajo con las manos a la altura de los hombros. Baja hasta casi tocar el suelo y sube manteniendo el cuerpo recto.',
-      'Press de Banca': 'Acuéstate en banco, baja la barra hasta el pecho y empuja hacia arriba con control.',
-      'Fondos': 'Usa dos bancos o barras paralelas. Baja el cuerpo flexionando los codos y sube hasta extienderlos completamente.',
-      'Aperturas con mancuerna': 'Con mancuernas y banco plano, abre los brazos hacia los lados y vuelve a juntar.',
-      'Press inclinado': 'Banco inclinado a 30º, realiza press para trabajar la parte superior del pecho.',
-      'Extensión de tríceps': 'Con mancuerna detrás de la cabeza, extiende el brazo hacia arriba manteniendo el codo fijo.'
-    };
-    document.querySelectorAll('.voz-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const ejercicio = btn.parentNode.textContent.replace('🔊', '').trim();
-        const msg = explicaciones[ejercicio] || 'No hay descripción disponible.';
-        const utterance = new SpeechSynthesisUtterance(msg);
-        utterance.lang = 'es-ES';
-        speechSynthesis.speak(utterance);
-      });
-    });
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
 
-    // Modo oscuro toggle
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-    });
+    function read(text) {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'es-ES';
+      window.speechSynthesis.speak(u);
+    }
   </script>
 </body>
 </html>
