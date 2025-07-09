@@ -1,116 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fitness App - Extendida</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fitness Web</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class'
-    }
-  </script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    h1, h2, h3 {
-      font-family: 'Lora', serif;
-    }
-    .page {
-      display: none;
-    }
-    .page.active {
-      display: block;
-    }
+    .page { display: none; }
+    .active { display: block; }
   </style>
 </head>
-<body class="bg-gray-100">
-  <div id="app" class="max-w-md mx-auto bg-white p-4 rounded shadow">
-    <h1 class="text-xl font-bold mb-4">Ejercicios por Día</h1>
-    <div id="program-overview-page">
-      <div class="space-y-4">
-        <button onclick="renderWorkoutPage('day-1', 'beginner')" class="block w-full p-2 bg-sky-200 rounded">Día 1</button>
-        <button onclick="renderWorkoutPage('day-2', 'beginner')" class="block w-full p-2 bg-green-200 rounded">Día 2</button>
-        <button onclick="renderWorkoutPage('day-3', 'beginner')" class="block w-full p-2 bg-rose-200 rounded">Día 3</button>
-        <button onclick="renderWorkoutPage('day-4', 'beginner')" class="block w-full p-2 bg-yellow-200 rounded">Día 4</button>
+<body class="bg-slate-50 dark:bg-stone-900">
+
+  <!-- Contenedor -->
+  <div class="max-w-sm mx-auto bg-white dark:bg-stone-950 min-h-screen flex flex-col">
+    <header id="main-header" class="p-6 flex justify-between items-center hidden">
+      <h2 id="greeting" class="text-2xl font-bold text-slate-800 dark:text-slate-100">Hola, Atleta!</h2>
+    </header>
+    <main class="flex-grow">
+      <div id="program-overview-page" class="page active p-6">
+        <h2 class="text-2xl font-bold mb-4">Ejercicios por Día</h2>
+        <div class="space-y-4">
+          <button data-day="day-1" class="w-full p-4 rounded-lg bg-sky-50 dark:bg-sky-900/50">Día 1: Pecho y Tríceps</button>
+          <button data-day="day-2" class="w-full p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/50">Día 2: Espalda y Bíceps</button>
+          <button data-day="day-3" class="w-full p-4 rounded-lg bg-rose-50 dark:bg-rose-900/50">Día 3: Piernas y Glúteos</button>
+          <button data-day="day-4" class="w-full p-4 rounded-lg bg-amber-50 dark:bg-amber-900/50">Día 4: Hombros y Core</button>
+        </div>
       </div>
-    </div>
-    <div id="workout-detail-page" class="page mt-4"></div>
+      <div id="workout-detail-page" class="page"></div>
+    </main>
   </div>
 
   <script>
+    // Función voz
+    function leerDescripcion(texto) {
+      const speech = new SpeechSynthesisUtterance(texto);
+      speech.lang = 'es-ES';
+      window.speechSynthesis.speak(speech);
+    }
+
+    // Ejercicios completos
     const workouts = {
-      'day-1': {
-        title: 'Día 1: Pecho y Tríceps',
-        exercises: [
+      'day-1': { title: 'Día 1: Pecho y Tríceps', exercises: [
           { name: 'Flexiones', description: 'Ejercicio básico para pecho.' },
           { name: 'Press de Banca', description: 'Ejercicio de fuerza para pecho.' },
           { name: 'Fondos', description: 'Activa tríceps y pecho.' },
           { name: 'Aperturas con mancuerna', description: 'Estira fibras pectorales.' },
           { name: 'Press inclinado', description: 'Enfocado en la parte superior del pecho.' },
           { name: 'Extensión de tríceps', description: 'Aísla el tríceps con más precisión.' },
-        ]
-      },
-      'day-2': {
-        title: 'Día 2: Espalda y Bíceps',
-        exercises: [
-          { name: 'Remo con mancuerna', description: 'Desarrolla masa en la espalda.' },
-          { name: 'Pull-aparts con banda', description: 'Activa deltoides posteriores.' },
-          { name: 'Curl de bíceps', description: 'Ejercicio base para bíceps.' },
-          { name: 'Jalón al pecho', description: 'Desarrolla dorsales.' },
-          { name: 'Peso muerto', description: 'Trabaja toda la cadena posterior.' },
-          { name: 'Curl martillo', description: 'Foco en el braquiorradial.' },
-        ]
-      },
-      'day-3': {
-        title: 'Día 3: Piernas y Glúetos',
-        exercises: [
-          { name: 'Sentadillas', description: 'Básico para fuerza en piernas.' },
-          { name: 'Zancadas', description: 'Fuerza unilateral.' },
-          { name: 'Puente de glúteos', description: 'Enfocado en glúteos.' },
-          { name: 'Step-ups', description: 'Mejora estabilidad y fuerza.' },
-          { name: 'Peso muerto rumano', description: 'Foco en isquiotibiales y glúteos.' },
-          { name: 'Elevación de talones', description: 'Fortalece los gemelos.' },
-        ]
-      },
-      'day-4': {
-        title: 'Día 4: Hombros y Core',
-        exercises: [
-          { name: 'Press de hombros', description: 'Desarrolla los deltoides.' },
-          { name: 'Elevaciones laterales', description: 'Aísla el deltoide medio.' },
-          { name: 'Plancha', description: 'Fortalece el core.' },
-          { name: 'Giros rusos', description: 'Enfocados en oblicuos.' },
-          { name: 'Elevación frontal', description: 'Deltoide anterior.' },
-          { name: 'Ab wheel rollout', description: 'Core avanzado y desafiante.' },
-        ]
-      }
+        ] },
+      'day-2': { title: 'Día 2: Espalda y Bíceps', exercises: [
+          { name: 'Remo con Mancuerna', description: 'Trabaja la espalda media y alta.' },
+          { name: 'Pull-aparts con Banda', description: 'Activa los hombros posteriores y espalda.' },
+          { name: 'Curl de Bíceps', description: 'Ejercicio clásico para bíceps.' },
+          { name: 'Jalón al Pecho', description: 'Desarrolla dorsales y fuerza de tracción.' },
+          { name: 'Remo Invertido', description: 'Fortalece la espalda y estabilidad escapular.' },
+          { name: 'Curl Martillo', description: 'Trabaja bíceps y antebrazo en agarre neutro.' },
+        ] },
+      'day-3': { title: 'Día 3: Piernas y Glúteos', exercises: [
+          { name: 'Sentadillas', description: 'Base para fuerza en piernas y glúteos.' },
+          { name: 'Zancadas', description: 'Equilibrio y fuerza unilateral en piernas.' },
+          { name: 'Puente de Glúteos', description: 'Activa glúteos y parte baja de la espalda.' },
+          { name: 'Step-ups', description: 'Subida a banco, fortalece piernas y glúteos.' },
+          { name: 'Peso Muerto Rumano', description: 'Trabaja femorales y cadena posterior.' },
+          { name: 'Elevación de Talones', description: 'Ejercicio para fortalecer gemelos.' },
+        ] },
+      'day-4': { title: 'Día 4: Hombros y Core', exercises: [
+          { name: 'Press de Hombros', description: 'Fortalece deltoides y estabilidad de hombros.' },
+          { name: 'Elevaciones Laterales', description: 'Define la parte lateral del hombro.' },
+          { name: 'Plancha', description: 'Ejercicio de core y estabilidad general.' },
+          { name: 'Giros Rusos', description: 'Activa oblicuos y control del core.' },
+          { name: 'Encogimiento de Hombros', description: 'Trabaja trapecio superior.' },
+          { name: 'Plancha Lateral', description: 'Ejercicio para oblicuos y estabilidad lateral.' },
+        ] },
     };
 
-    function speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'es-ES';
-      speechSynthesis.speak(utterance);
+    // Función para renderizar
+    function renderWorkoutPage(dayId) {
+      const w = workouts[dayId];
+      const html = `
+        <div class="p-6">
+          <button onclick="showPage('program-overview-page')" class="mb-4">← Volver</button>
+          <h2 class="text-2xl font-bold mb-4">${w.title}</h2>
+          ${w.exercises.map(ex => `
+            <div class="mb-4 p-4 bg-slate-50 dark:bg-stone-800/50 rounded-lg shadow-sm flex justify-between items-center">
+              <div>
+                <h4 class="font-bold">${ex.name}</h4>
+                <p class="text-sm">${ex.description}</p>
+              </div>
+              <button onclick="leerDescripcion('${ex.description}')" class="text-2xl">🔊</button>
+            </div>
+          `).join('')}
+        </div>`;
+      document.getElementById('workout-detail-page').innerHTML = html;
+      showPage('workout-detail-page');
     }
 
-    function renderWorkoutPage(dayId, level) {
-      const workout = workouts[dayId];
-      const container = document.getElementById('workout-detail-page');
-      container.innerHTML = `
-        <h2 class="text-lg font-bold mt-4">${workout.title}</h2>
-        <ul class="mt-2 space-y-2">
-          ${workout.exercises.map(ex => `
-            <li class="p-2 border rounded bg-white">
-              <div class="flex justify-between items-center">
-                <div><strong>${ex.name}</strong>: <span class="text-gray-600">${ex.description}</span></div>
-                <button onclick="speak('${ex.name}: ${ex.description}')" class="ml-2 text-sm text-blue-500 hover:underline">🔊</button>
-              </div>
-            </li>
-          `).join('')}
-        </ul>
-      `;
-      container.classList.add('active');
+    // Manejo de pestañas/días
+    document.querySelectorAll('[data-day]').forEach(btn =>
+      btn.addEventListener('click', () => renderWorkoutPage(btn.dataset.day))
+    );
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
   </script>
+
 </body>
 </html>
