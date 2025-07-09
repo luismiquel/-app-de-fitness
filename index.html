@@ -3,76 +3,164 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>App Fitness Mejorada 2.1</title>
+  <title>App Fitness Mejorada Final</title>
   <style>
-    :root { /* Colores responsables */ }
-    /* ... igual al anterior ... */
+    :root {
+      --bg-light: #f9f9f9;
+      --bg-dark: #2e2e2e;
+      --sidebar-light: #e0e0e0;
+      --sidebar-dark: #3a3a3a;
+      --btn-active-light: #c0c0c0;
+      --btn-active-dark: #555555;
+      --font-light: #222222;
+      --font-dark: #eeeeee;
+      --font-main: 'Segoe UI', Tahoma, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      display: flex;
+      min-height: 100vh;
+      font-family: var(--font-main);
+      color: var(--font-light);
+      background: var(--bg-light);
+      transition: background 0.3s, color 0.3s;
+    }
+    .sidebar {
+      width: 200px;
+      background: var(--sidebar-light);
+      padding: 20px;
+      border-right: 1px solid #ccc;
+    }
+    .day-btn {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .day-btn.active { background: var(--btn-active-light); font-weight: bold; }
+    .toggle-btn {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      font-size: 16px;
+      border-radius: 4px;
+      background: #ffd54f;
+      cursor: pointer;
+    }
+    .content { flex: 1; padding: 20px; overflow-y: auto; }
+    .day-content { display: none; }
+    .day-content.active { display: block; }
+    .day-content h2 {
+      margin-bottom: 12px;
+      font-size: 26px;
+      border-bottom: 2px solid #888;
+      padding-bottom: 6px;
+    }
+    .ejercicio {
+      background: #fafafa;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+    .audio-btn { font-size: 24px; background: none; border: none; cursor: pointer; }
+    @media(max-width: 600px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #ccc; display: flex; overflow-x: auto; }
+      .day-btn { flex: none; margin-right: 10px; }
+      .toggle-btn { flex: none; }
+    }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--font-dark);
+    }
+    body.dark .sidebar {
+      background: var(--sidebar-dark);
+      color: var(--font-dark);
+    }
+    body.dark .day-btn.active {
+      background: var(--btn-active-dark);
+    }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <button class="day-btn active" data-day="1">Día 1</button>
-    <button class="day-btn" data-day="2">Día 2</button>
-    <button class="day-btn" data-day="3">Día 3</button>
-    <button class="day-btn" data-day="4">Día 4</button>
+    <button class="day-btn active" data-day="1">Día 1</button>
+    <button class="day-btn" data-day="2">Día 2</button>
+    <button class="day-btn" data-day="3">Día 3</button>
+    <button class="day-btn" data-day="4">Día 4</button>
     <button class="toggle-btn" onclick="toggleDark()">🌙 Modo Oscuro</button>
   </div>
 
   <div class="content">
-    <!-- Día 1 (ya tienes) -->
-
-    <!-- Día 2 - COMPLETO -->
-    <div class="day-content" data-day="2" hidden>
-      <h2>Día 2: Espalda y Bíceps — 4×20</h2>
-      <div class="ejercicio" style="background:#e8f4ff">
-        <span><strong>Jalones al pecho</strong>: siéntate, tira la barra hacia el pecho con espalda recta.</span>
-        <button class="audio-btn" onclick="read('Jalones al pecho. Siéntate en máquina, agarra la barra y tira hacia el pecho manteniendo espalda recta.')">🔊</button>
-      </div>
-      <!-- Añade los otros 5 ejercicios aquí -->
-      <!-- Por ejemplo -->
-      <div class="ejercicio" style="background:#ffe8f4">
-        <span><strong>Remo con barra</strong>: inclínate, tira la barra al estómago, controla al bajar.</span>
-        <button class="audio-btn" onclick="read('Remo con barra. Inclínate con la espalda recta, tira la barra hacia el estómago y controla la bajada.')">🔊</button>
-      </div>
-      <!-- Continúa con peso muerto, curl con mancuernas, etc. -->
+    <!-- Día 1 -->
+    <div class="day-content active" data-day="1">
+      <h2>Día 1: Pecho y Tríceps — 3×15</h2>
+      <div class="ejercicio"><span><strong>Flexiones</strong>: tumbado boca abajo…</span><button class="audio-btn" onclick="read('Flexiones...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Press de banca</strong>: acuéstate en un banco…</span><button class="audio-btn" onclick="read('Press de banca...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Fondos</strong>: usa bancos paralelos…</span><button class="audio-btn" onclick="read('Fondos...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Aperturas con mancuerna</strong>: acuéstate…</span><button class="audio-btn" onclick="read('Aperturas con mancuerna...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Press inclinado</strong>: banco 30–45°…</span><button class="audio-btn" onclick="read('Press inclinado...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Extensión tríceps</strong>: mancuerna detrás de la cabeza…</span><button class="audio-btn" onclick="read('Extensión de tríceps...')">🔊</button></div>
     </div>
-
-    <!-- Día 3 - COMPLETO -->
-    <div class="day-content" data-day="3" hidden>
-      <h2>Día 3: Piernas y Glúteos — 5×25</h2>
-      <div class="ejercicio" style="background:#fff8e0">
-        <span><strong>Sentadillas</strong>: pies a la anchura de hombros, baja caderas sin curvar la espalda.</span>
-        <button class="audio-btn" onclick="read('Sentadillas. Pies a la anchura de hombros, baja caderas como si te sentaras, mantén espalda neutra.')">🔊</button>
-      </div>
-      <!-- Resto de ejercicios: prensa, zancadas, rumano, talones, puente glúteos -->
+    <!-- Día 2 -->
+    <div class="day-content" data-day="2">
+      <h2>Día 2: Espalda y Bíceps — 4×20</h2>
+      <div class="ejercicio"><span><strong>Jalones al pecho</strong>: siéntate y baja la barra…</span><button class="audio-btn" onclick="read('Jalones al pecho...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Remo con barra</strong>: inclínate y tira la barra…</span><button class="audio-btn" onclick="read('Remo con barra...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Peso muerto</strong>: con espalda recta, baja y sube…</span><button class="audio-btn" onclick="read('Peso muerto...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Curl bíceps</strong>: de pie con mancuernas…</span><button class="audio-btn" onclick="read('Curl bíceps...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Pull-aparts</strong>: con banda…</span><button class="audio-btn" onclick="read('Pull-aparts...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Remo con mancuerna</strong>: apoya en banco…</span><button class="audio-btn" onclick="read('Remo con mancuerna...')">🔊</button></div>
     </div>
-
-    <!-- Día 4 - COMPLETO -->
-    <div class="day-content" data-day="4" hidden>
-      <h2>Día 4: Hombros y Core — 6×30</h2>
-      <div class="ejercicio" style="background:#e0fff8">
-        <span><strong>Press militar</strong>: de pie o sentado, empuja mancuernas desde hombros hacia arriba.</span>
-        <button class="audio-btn" onclick="read('Press militar. De pie o sentado, empuja mancuernas desde hombros hacia arriba hasta extender los brazos.')">🔊</button>
-      </div>
-      <!-- Continúa con elevaciones laterales, frontales, plancha, crunch, bicicleta abdominal -->
+    <!-- Día 3 -->
+    <div class="day-content" data-day="3">
+      <h2>Día 3: Piernas y Glúteos — 5×25</h2>
+      <div class="ejercicio"><span><strong>Sentadillas</strong>: baja caderas sin curvar espalda.</span><button class="audio-btn" onclick="read('Sentadillas...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Zancadas</strong>: paso adelante y baja.</span><button class="audio-btn" onclick="read('Zancadas...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Prensa de pierna</strong>: empuja plataforma con pies.</span><button class="audio-btn" onclick="read('Prensa...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Peso muerto rumano</strong>: bajas y subes manteniendo tensión.</span><button class="audio-btn" onclick="read('Peso muerto rumano...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Puente glúteos</strong>: levantas caderas al suelo.</span><button class="audio-btn" onclick="read('Puente glúteos...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Step-ups</strong>: sube al banco con una pierna.</span><button class="audio-btn" onclick="read('Step-ups...')">🔊</button></div>
+    </div>
+    <!-- Día 4 -->
+    <div class="day-content" data-day="4">
+      <h2>Día 4: Hombros y Core — 6×30</h2>
+      <div class="ejercicio"><span><strong>Press militar</strong>: empuja mancuernas desde hombros.</span><button class="audio-btn" onclick="read('Press militar...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Elevaciones laterales</strong>: levantas brazos al lado.</span><button class="audio-btn" onclick="read('Elevaciones laterales...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Elevaciones frontales</strong>: levantas brazos al frente.</span><button class="audio-btn" onclick="read('Elevaciones frontales...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Plancha</strong>: cuerpo recto sobre antebrazos.</span><button class="audio-btn" onclick="read('Plancha...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Crunch</strong>: subes tronco hacia rodillas.</span><button class="audio-btn" onclick="read('Crunch...')">🔊</button></div>
+      <div class="ejercicio"><span><strong>Bicicleta abdominal</strong>: tocas codo contrario rodilla.</span><button class="audio-btn" onclick="read('Bicicleta abdominal...')">🔊</button></div>
     </div>
   </div>
 
   <script>
-    const dayBtns = document.querySelectorAll('.day-btn');
-    const dayContents = document.querySelectorAll('.day-content');
-    dayBtns.forEach(btn => {
+    // Sidebar toggle entre días
+    document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const d = btn.getAttribute('data-day');
-        dayBtns.forEach(b => b.classList.toggle('active', b === btn));
-        dayContents.forEach(c => c.hidden = c.getAttribute('data-day') !== d);
+        document.querySelectorAll('.day-btn').forEach(b => b.classList.toggle('active', b === btn));
+        const day = btn.dataset.day;
+        document.querySelectorAll('.day-content').forEach(c => {
+          c.classList.toggle('active', c.dataset.day === day);
+        });
       });
     });
-
+    // Modo oscuro
     function toggleDark() {
       document.body.classList.toggle('dark');
     }
-
+    // Voz
     function read(text) {
       const msg = new SpeechSynthesisUtterance(text);
       msg.lang = 'es-ES';
