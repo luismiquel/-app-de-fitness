@@ -1,111 +1,54 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fitness Web</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .page { display: none; }
-    .active { display: block; }
-  </style>
-</head>
-<body class="bg-slate-50 dark:bg-stone-900">
+<section id="ejercicios">
+  <h2>Ejercicios por Día</h2>
 
-  <!-- Contenedor -->
-  <div class="max-w-sm mx-auto bg-white dark:bg-stone-950 min-h-screen flex flex-col">
-    <header id="main-header" class="p-6 flex justify-between items-center hidden">
-      <h2 id="greeting" class="text-2xl font-bold text-slate-800 dark:text-slate-100">Hola, Atleta!</h2>
-    </header>
-    <main class="flex-grow">
-      <div id="program-overview-page" class="page active p-6">
-        <h2 class="text-2xl font-bold mb-4">Ejercicios por Día</h2>
-        <div class="space-y-4">
-          <button data-day="day-1" class="w-full p-4 rounded-lg bg-sky-50 dark:bg-sky-900/50">Día 1: Pecho y Tríceps</button>
-          <button data-day="day-2" class="w-full p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/50">Día 2: Espalda y Bíceps</button>
-          <button data-day="day-3" class="w-full p-4 rounded-lg bg-rose-50 dark:bg-rose-900/50">Día 3: Piernas y Glúteos</button>
-          <button data-day="day-4" class="w-full p-4 rounded-lg bg-amber-50 dark:bg-amber-900/50">Día 4: Hombros y Core</button>
-        </div>
-      </div>
-      <div id="workout-detail-page" class="page"></div>
-    </main>
-  </div>
+  <h3>Día 1: Pecho y Tríceps</h3>
+  <ul>
+    <li>Flexiones <button class="voz-btn" data-description="Colócate boca abajo con las manos a la altura de los hombros. Súbete manteniendo el cuerpo recto y baja hasta que el pecho casi toque el suelo.">🔊</button></li>
+    <li>Press de Banca <button class="voz-btn" data-description="Acuéstate en un banco, agarra la barra con las manos un poco más anchas que los hombros. Baja la barra controladamente hasta el pecho y empuja hacia arriba.">🔊</button></li>
+    <li>Fondos <button class="voz-btn" data-description="Colócate entre dos bancos o barras paralelas. Baja tu cuerpo flexionando los codos a 90 grados, luego empuja hacia arriba hasta la extensión completa.">🔊</button></li>
+    <li>Aperturas con mancuerna <button class="voz-btn" data-description="Acuéstate en un banco plano con mancuernas. Abre los brazos hacia los lados con una ligera flexión en los codos y vuelve a subir juntándolos.">🔊</button></li>
+    <li>Press inclinado <button class="voz-btn" data-description="En un banco inclinado, realiza el press con barra o mancuernas focalizando en la parte superior del pecho.">🔊</button></li>
+    <li>Extensión de tríceps <button class="voz-btn" data-description="Con una mancuerna, eleva el brazo por detrás de la cabeza. Extiende el antebrazo hacia arriba y baja controladamente.">🔊</button></li>
+  </ul>
 
-  <script>
-    // Función voz
-    function leerDescripcion(texto) {
-      const speech = new SpeechSynthesisUtterance(texto);
-      speech.lang = 'es-ES';
-      window.speechSynthesis.speak(speech);
+  <h3>Día 2: Espalda y Bíceps</h3>
+  <ul>
+    <li>Remo con barra <button class="voz-btn" data-description="Inclina el torso hacia adelante, sujeta la barra y tira hacia el abdomen.">🔊</button></li>
+    <li>Dominadas <button class="voz-btn" data-description="Cuélgate de una barra y sube el cuerpo hasta que el mentón supere la barra.">🔊</button></li>
+    <li>Jalones al pecho <button class="voz-btn" data-description="En una polea, tira del cable hacia el pecho manteniendo la espalda recta.">🔊</button></li>
+    <li>Curl con barra <button class="voz-btn" data-description="Con barra recta, realiza flexiones de codo sin mover los hombros.">🔊</button></li>
+    <li>Curl alterno <button class="voz-btn" data-description="Alterna la subida de mancuernas mientras mantienes los codos fijos.">🔊</button></li>
+    <li>Martillo <button class="voz-btn" data-description="Sujeta las mancuernas verticalmente y realiza curls para activar el braquiorradial.">🔊</button></li>
+  </ul>
+
+  <h3>Día 3: Piernas y Glúteos</h3>
+  <ul>
+    <li>Sentadillas <button class="voz-btn" data-description="Con los pies separados al ancho de los hombros, baja las caderas como si te sentaras y vuelve a subir.">🔊</button></li>
+    <li>Prensa de piernas <button class="voz-btn" data-description="Empuja con los pies una plataforma manteniendo el control al subir y bajar.">🔊</button></li>
+    <li>Zancadas <button class="voz-btn" data-description="Da un paso adelante, baja controladamente, y regresa. Alterna piernas.">🔊</button></li>
+    <li>Elevaciones de talón <button class="voz-btn" data-description="De pie, elévate sobre los dedos de los pies para trabajar los gemelos.">🔊</button></li>
+    <li>Hip thrust <button class="voz-btn" data-description="Con la espalda sobre un banco, eleva la cadera hacia arriba contrayendo los glúteos.">🔊</button></li>
+    <li>Puente de glúteos <button class="voz-btn" data-description="Acostado boca arriba, flexiona rodillas y eleva la cadera hacia arriba.">🔊</button></li>
+  </ul>
+
+  <h3>Día 4: Hombros y Core</h3>
+  <ul>
+    <li>Press militar <button class="voz-btn" data-description="Con barra o mancuernas, empuja el peso desde los hombros hacia arriba.">🔊</button></li>
+    <li>Elevaciones laterales <button class="voz-btn" data-description="Con los brazos rectos, sube las mancuernas hasta la altura de los hombros.">🔊</button></li>
+    <li>Elevaciones frontales <button class="voz-btn" data-description="Levanta las mancuernas hacia el frente hasta la altura de los ojos.">🔊</button></li>
+    <li>Plancha <button class="voz-btn" data-description="Apóyate en antebrazos y puntas de pie, mantén el cuerpo recto.">🔊</button></li>
+    <li>Crunch abdominal <button class="voz-btn" data-description="Acuéstate y eleva los hombros contrayendo los abdominales.">🔊</button></li>
+    <li>Elevaciones de piernas <button class="voz-btn" data-description="Acostado, eleva las piernas rectas hasta formar un ángulo de 90 grados.">🔊</button></li>
+  </ul>
+</section>
+
+<script>
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('voz-btn')) {
+      const texto = e.target.getAttribute('data-description');
+      const mensaje = new SpeechSynthesisUtterance(texto);
+      mensaje.lang = 'es-ES';
+      speechSynthesis.speak(mensaje);
     }
-
-    // Ejercicios completos
-    const workouts = {
-      'day-1': { title: 'Día 1: Pecho y Tríceps', exercises: [
-          { name: 'Flexiones', description: 'Ejercicio básico para pecho.' },
-          { name: 'Press de Banca', description: 'Ejercicio de fuerza para pecho.' },
-          { name: 'Fondos', description: 'Activa tríceps y pecho.' },
-          { name: 'Aperturas con mancuerna', description: 'Estira fibras pectorales.' },
-          { name: 'Press inclinado', description: 'Enfocado en la parte superior del pecho.' },
-          { name: 'Extensión de tríceps', description: 'Aísla el tríceps con más precisión.' },
-        ] },
-      'day-2': { title: 'Día 2: Espalda y Bíceps', exercises: [
-          { name: 'Remo con Mancuerna', description: 'Trabaja la espalda media y alta.' },
-          { name: 'Pull-aparts con Banda', description: 'Activa los hombros posteriores y espalda.' },
-          { name: 'Curl de Bíceps', description: 'Ejercicio clásico para bíceps.' },
-          { name: 'Jalón al Pecho', description: 'Desarrolla dorsales y fuerza de tracción.' },
-          { name: 'Remo Invertido', description: 'Fortalece la espalda y estabilidad escapular.' },
-          { name: 'Curl Martillo', description: 'Trabaja bíceps y antebrazo en agarre neutro.' },
-        ] },
-      'day-3': { title: 'Día 3: Piernas y Glúteos', exercises: [
-          { name: 'Sentadillas', description: 'Base para fuerza en piernas y glúteos.' },
-          { name: 'Zancadas', description: 'Equilibrio y fuerza unilateral en piernas.' },
-          { name: 'Puente de Glúteos', description: 'Activa glúteos y parte baja de la espalda.' },
-          { name: 'Step-ups', description: 'Subida a banco, fortalece piernas y glúteos.' },
-          { name: 'Peso Muerto Rumano', description: 'Trabaja femorales y cadena posterior.' },
-          { name: 'Elevación de Talones', description: 'Ejercicio para fortalecer gemelos.' },
-        ] },
-      'day-4': { title: 'Día 4: Hombros y Core', exercises: [
-          { name: 'Press de Hombros', description: 'Fortalece deltoides y estabilidad de hombros.' },
-          { name: 'Elevaciones Laterales', description: 'Define la parte lateral del hombro.' },
-          { name: 'Plancha', description: 'Ejercicio de core y estabilidad general.' },
-          { name: 'Giros Rusos', description: 'Activa oblicuos y control del core.' },
-          { name: 'Encogimiento de Hombros', description: 'Trabaja trapecio superior.' },
-          { name: 'Plancha Lateral', description: 'Ejercicio para oblicuos y estabilidad lateral.' },
-        ] },
-    };
-
-    // Función para renderizar
-    function renderWorkoutPage(dayId) {
-      const w = workouts[dayId];
-      const html = `
-        <div class="p-6">
-          <button onclick="showPage('program-overview-page')" class="mb-4">← Volver</button>
-          <h2 class="text-2xl font-bold mb-4">${w.title}</h2>
-          ${w.exercises.map(ex => `
-            <div class="mb-4 p-4 bg-slate-50 dark:bg-stone-800/50 rounded-lg shadow-sm flex justify-between items-center">
-              <div>
-                <h4 class="font-bold">${ex.name}</h4>
-                <p class="text-sm">${ex.description}</p>
-              </div>
-              <button onclick="leerDescripcion('${ex.description}')" class="text-2xl">🔊</button>
-            </div>
-          `).join('')}
-        </div>`;
-      document.getElementById('workout-detail-page').innerHTML = html;
-      showPage('workout-detail-page');
-    }
-
-    // Manejo de pestañas/días
-    document.querySelectorAll('[data-day]').forEach(btn =>
-      btn.addEventListener('click', () => renderWorkoutPage(btn.dataset.day))
-    );
-
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-  </script>
-
-</body>
-</html>
+  });
+</script>
