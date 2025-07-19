@@ -3,22 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="author" content="Luis Miguel" />
-  <title>App de Fitness de Luis Miguel</title>
+  <title>App de Fitness</title>
   <style>
-    /* ... tu CSS completo permanece igual ... */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .modo-oscuro {
+      background-color: #121212;
+      color: #f2f2f2;
+    }
+
+    header {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .dias {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 1rem;
+      background-color: #fff;
+    }
+
+    .modo-oscuro .dias {
+      background-color: #1e1e1e;
+    }
+
+    .dias button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      background-color: #4CAF50;
+      color: white;
+      transition: background 0.2s;
+    }
+
+    .dias button:hover {
+      background-color: #45a049;
+    }
+
+    .contenido {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .ejercicio {
+      margin: 10px auto;
+      padding: 1rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      font-size: 1.1rem;
+      background-color: #e0f7fa;
+      color: #006064;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .modo-oscuro .ejercicio {
+      background-color: #263238;
+      color: #b2ebf2;
+    }
+
+    .toggle-dark {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 8px 12px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+    }
 
     footer {
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
-      background-color: #eee;
-      margin-top: 2rem;
+      opacity: 0.7;
     }
 
-    .modo-oscuro footer {
-      background-color: #1e1e1e;
-      color: #ccc;
+    @media (max-width: 640px) {
+      header {
+        font-size: 1.5rem;
+      }
+
+      .dias {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+
+      .dias button {
+        flex: 1 1 40%;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -36,7 +127,77 @@
   <footer>Aplicación de Fitness desarrollada por Luis Miguel © 2025</footer>
 
   <script>
-    // ... tu script JavaScript permanece igual ...
+    const ejerciciosPorDia = {
+      1: {
+        titulo: "Día 1: Pecho y Tríceps — 3×15",
+        ejercicios: [
+          { nombre: "Flexiones", descripcion: "Ejercicio básico para trabajar pectorales, tríceps y core. Baja el pecho hasta rozar el suelo y empuja hacia arriba." },
+          { nombre: "Press de Banca", descripcion: "Acostado en banco, baja la barra al pecho y empuja hacia arriba." },
+          { nombre: "Fondos", descripcion: "Apóyate en paralelas y baja el cuerpo hasta que los codos estén en 90°." },
+          { nombre: "Aperturas con mancuerna", descripcion: "En banco plano, abre brazos lateralmente y vuelve al centro." },
+          { nombre: "Press inclinado", descripcion: "Usa banco inclinado para trabajar la parte superior del pecho." },
+          { nombre: "Extensión de tríceps", descripcion: "Con mancuerna sobre la cabeza, flexiona y extiende los brazos." }
+        ]
+      },
+      2: {
+        titulo: "Día 2: Espalda y Bíceps — 4×20",
+        ejercicios: [
+          { nombre: "Dominadas", descripcion: "Sube tu cuerpo agarrándote a una barra fija." },
+          { nombre: "Remo con mancuerna", descripcion: "Inclina el torso, lleva la mancuerna hacia el abdomen." },
+          { nombre: "Peso muerto", descripcion: "Levanta la barra desde el suelo manteniendo la espalda recta." },
+          { nombre: "Curl de bíceps", descripcion: "Flexiona los brazos levantando mancuernas." },
+          { nombre: "Curl martillo", descripcion: "Bíceps con mancuernas en posición vertical." },
+          { nombre: "Remo invertido", descripcion: "Usa barra baja, tira tu pecho hacia arriba." }
+        ]
+      },
+      3: {
+        titulo: "Día 3: Piernas y Glúteos — 5×25",
+        ejercicios: [
+          { nombre: "Sentadillas", descripcion: "Flexiona rodillas bajando la cadera, espalda recta." },
+          { nombre: "Zancadas", descripcion: "Da un paso al frente y baja hasta formar 90° con las piernas." },
+          { nombre: "Peso muerto rumano", descripcion: "Espalda recta, baja barra deslizando por las piernas." },
+          { nombre: "Elevación de talones", descripcion: "De pie, sube y baja sobre las puntas para trabajar gemelos." },
+          { nombre: "Puente de glúteos", descripcion: "Acostado, eleva la cadera contrayendo glúteos." },
+          { nombre: "Step-ups", descripcion: "Sube con una pierna a una superficie elevada." }
+        ]
+      },
+      4: {
+        titulo: "Día 4: Hombros y Core — 6×30",
+        ejercicios: [
+          { nombre: "Press militar", descripcion: "Empuja mancuernas sobre los hombros hacia arriba." },
+          { nombre: "Elevaciones laterales", descripcion: "Levanta los brazos hacia los lados hasta la altura de los hombros." },
+          { nombre: "Elevaciones frontales", descripcion: "Levanta los brazos hacia adelante, manteniéndolos rectos." },
+          { nombre: "Plancha", descripcion: "Cuerpo alineado sobre antebrazos y puntas de los pies." },
+          { nombre: "Crunch", descripcion: "Acostado, sube el torso hacia las rodillas contrayendo abdominales." },
+          { nombre: "Bicicleta abdominal", descripcion: "Toca codo derecho con rodilla izquierda y viceversa en movimiento alterno." }
+        ]
+      }
+    };
+
+    function mostrarDia(dia) {
+      const contenido = document.getElementById("contenido");
+      const diaData = ejerciciosPorDia[dia];
+      contenido.innerHTML = `<h2>${diaData.titulo}</h2>` + diaData.ejercicios.map(e => `
+        <div class="ejercicio">
+          <strong>${e.nombre}</strong><br>
+          <button onclick="leer('${e.nombre}. ${e.descripcion}')">🔊</button><br>
+          <small>${e.descripcion}</small>
+        </div>
+      `).join('');
+    }
+
+    function leer(texto) {
+      const mensaje = new SpeechSynthesisUtterance(texto);
+      mensaje.lang = "es-ES";
+      speechSynthesis.cancel();
+      speechSynthesis.speak(mensaje);
+    }
+
+    function toggleModoOscuro() {
+      document.body.classList.toggle("modo-oscuro");
+    }
+
+    window.onload = () => mostrarDia(1);
   </script>
 </body>
 </html>
